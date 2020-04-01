@@ -43,7 +43,9 @@
     <!-- =============================================================== -->
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <java.version>1.8</java.version>
+        <java.version>11</java.version>
+        <maven.source.compiler>11</maven.source.compiler>
+        <maven.source.target>11</maven.source.target>
         <maven.build.timestamp.format>dd/MM/yyyy</maven.build.timestamp.format>
         <buildTime>${maven.build.timestamp}</buildTime>
 
@@ -52,7 +54,14 @@
 
         <!-- ===== Version properties ===== -->
         <log4j.version>2.8.1</log4j.version>
-        <spring.version>4.3.18</spring.version>
+        <spring.version>4.3.18.RELEASE</spring.version>
+
+        <!--        Sonar dependencies-->
+        <sonar.projectKey>OC-java-P9</sonar.projectKey>
+        <sonar.moduleKey>${artifactId}</sonar.moduleKey>
+        <sonar.organization>metaxiii</sonar.organization>
+        <sonar.host.url>https://sonarcloud.io</sonar.host.url>
+        <sonar.login>0658ecdf4d3a908fb17b224f77afee26cddea8cd</sonar.login>
     </properties>
 
 
