@@ -9,7 +9,7 @@
     <!-- ===== Maven ===== -->
     <groupId>com.dummy.myerp</groupId>
     <artifactId>myerp</artifactId>
-    <version>1.x.x-SNAPSHOT</version>
+    <version>1.0.0-SNAPSHOT</version>
     <packaging>pom</packaging>
 
     <!-- ===== General information ===== -->
@@ -45,7 +45,7 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <java.version>11</java.version>
         <maven.source.compiler>11</maven.source.compiler>
-        <maven.source.target>11</maven.source.target>
+        <maven.source.target>${maven.source.compiler}</maven.source.target>
         <maven.build.timestamp.format>dd/MM/yyyy</maven.build.timestamp.format>
         <buildTime>${maven.build.timestamp}</buildTime>
 
@@ -55,13 +55,13 @@
         <!-- ===== Version properties ===== -->
         <log4j.version>2.8.1</log4j.version>
         <spring.version>4.3.18.RELEASE</spring.version>
-
         <!--        Sonar dependencies-->
         <sonar.projectKey>OC-java-P9</sonar.projectKey>
-        <sonar.moduleKey>${artifactId}</sonar.moduleKey>
+        <sonar.moduleKey>${project.artifactId}</sonar.moduleKey>
         <sonar.organization>metaxiii</sonar.organization>
         <sonar.host.url>https://sonarcloud.io</sonar.host.url>
         <sonar.login>0658ecdf4d3a908fb17b224f77afee26cddea8cd</sonar.login>
+        <dependency.locations.enabled>false</dependency.locations.enabled>
     </properties>
 
 
@@ -113,7 +113,7 @@
         <repository>
             <id>project.local</id>
             <name>project.local</name>
-            <url>file://${basedir}/../src/lib/</url>
+            <url>file://${basedir}\..\src\lib</url>
             <releases>
                 <updatePolicy>always</updatePolicy>
             </releases>
@@ -255,9 +255,36 @@
             <dependency>
                 <groupId>junit</groupId>
                 <artifactId>junit</artifactId>
-                <version>4.12</version>
+                <version>4.13</version>
                 <scope>test</scope>
             </dependency>
+
+            <dependency>
+                <groupId>org.junit.jupiter</groupId>
+                <artifactId>junit-jupiter-api</artifactId>
+                <version>5.6.0</version>
+                <scope>test</scope>
+            </dependency>
+            <dependency>
+                <groupId>org.junit.jupiter</groupId>
+                <artifactId>junit-jupiter</artifactId>
+                <version>5.6.0</version>
+                <scope>test</scope>
+            </dependency>
+            <dependency>
+                <groupId>org.mockito</groupId>
+                <artifactId>mockito-all</artifactId>
+                <version>1.10.19</version>
+                <scope>test</scope>
+            </dependency>
+            <dependency>
+                <groupId>org.springframework</groupId>
+                <artifactId>spring-test</artifactId>
+                <version>4.3.20.RELEASE</version>
+                <scope>test</scope>
+            </dependency>
+
+
         </dependencies>
     </dependencyManagement>
 
@@ -303,7 +330,7 @@
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-dependency-plugin</artifactId>
-                    <version>3.0</version>
+                    <version>3.1.2</version>
                 </plugin>
 
                 <!-- ===== Création des JAR ===== -->
@@ -338,7 +365,7 @@
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-surefire-plugin</artifactId>
-                    <version>2.20</version>
+                    <version>3.0.0-M4</version>
                 </plugin>
 
                 <!-- ===== Plugin d'analyse de code Checkstyle ===== -->
@@ -374,7 +401,7 @@
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-javadoc-plugin</artifactId>
-                    <version>2.10.4</version>
+                    <version>3.2.0</version>
                 </plugin>
 
                 <!-- ===== Aide au constructions particulières ===== -->
@@ -427,7 +454,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-surefire-report-plugin</artifactId>
-                <version>2.20</version>
+                <version>3.0.0-M4</version>
                 <configuration>
                     <linkXRef>false</linkXRef>
                 </configuration>
@@ -461,10 +488,10 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-javadoc-plugin</artifactId>
-                <version>2.10.4</version>
+                <version>3.2.0</version>
                 <configuration>
                     <!-- Définition de l'exécutable de javadoc à utiliser si on ne prend pas celui par défaut -->
-                    <!--javadocExecutable>/opt/java/jdk8/bin/javadoc</javadocExecutable -->
+                    <javadocExecutable>${java.home}\bin\javadoc</javadocExecutable>
                     <quiet>true</quiet>
                     <locale>fr</locale>
                     <!-- Définition des "groupes" de javadoc -->
