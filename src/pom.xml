@@ -54,7 +54,7 @@
 
         <!-- ===== Version properties ===== -->
         <log4j.version>2.8.1</log4j.version>
-        <spring.version>4.3.18.RELEASE</spring.version>
+        <spring.version>5.2.5.RELEASE</spring.version>
         <!--        Sonar dependencies-->
         <sonar.projectKey>OC-java-P9</sonar.projectKey>
         <sonar.moduleKey>${project.artifactId}</sonar.moduleKey>
@@ -103,24 +103,6 @@
             <id>test-consumer</id>
         </profile>
     </profiles>
-
-
-    <!-- =============================================================== -->
-    <!-- Repositories -->
-    <!-- =============================================================== -->
-    <repositories>
-        <!-- ===== Project local repository ===== -->
-        <repository>
-            <id>project.local</id>
-            <name>project.local</name>
-            <url>file://${basedir}\..\src\lib</url>
-            <releases>
-                <updatePolicy>always</updatePolicy>
-            </releases>
-        </repository>
-    </repositories>
-
-
     <!-- =============================================================== -->
     <!-- Dependency managment -->
     <!-- =============================================================== -->
@@ -258,7 +240,6 @@
                 <version>4.13</version>
                 <scope>test</scope>
             </dependency>
-
             <dependency>
                 <groupId>org.junit.jupiter</groupId>
                 <artifactId>junit-jupiter-api</artifactId>
@@ -280,11 +261,14 @@
             <dependency>
                 <groupId>org.springframework</groupId>
                 <artifactId>spring-test</artifactId>
-                <version>4.3.20.RELEASE</version>
                 <scope>test</scope>
+                <version>${spring.version}</version>
             </dependency>
-
-
+            <dependency>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-report-plugin</artifactId>
+                <version>2.22.2</version>
+            </dependency>
         </dependencies>
     </dependencyManagement>
 
@@ -365,7 +349,19 @@
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-surefire-plugin</artifactId>
-                    <version>3.0.0-M4</version>
+                    <version>2.19.1</version>
+                    <dependencies>
+                        <dependency>
+                            <groupId>org.junit.platform</groupId>
+                            <artifactId>junit-platform-surefire-provider</artifactId>
+                            <version>1.1.0</version>
+                        </dependency>
+                        <dependency>
+                            <groupId>org.junit.jupiter</groupId>
+                            <artifactId>junit-jupiter-engine</artifactId>
+                            <version>5.1.0</version>
+                        </dependency>
+                    </dependencies>
                 </plugin>
 
                 <!-- ===== Plugin d'analyse de code Checkstyle ===== -->
@@ -454,7 +450,6 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-surefire-report-plugin</artifactId>
-                <version>3.0.0-M4</version>
                 <configuration>
                     <linkXRef>false</linkXRef>
                 </configuration>
