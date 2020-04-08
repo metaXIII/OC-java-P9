@@ -4,8 +4,10 @@ import com.dummy.myerp.model.bean.comptabilite.CompteComptable;
 import com.dummy.myerp.model.bean.comptabilite.EcritureComptable;
 import com.dummy.myerp.model.bean.comptabilite.JournalComptable;
 import com.dummy.myerp.model.bean.comptabilite.LigneEcritureComptable;
+import com.dummy.myerp.technical.exception.FunctionalException;
 import lib.LoggingExtension;
 import org.apache.logging.log4j.Logger;
+import org.junit.Assert;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -31,6 +33,7 @@ public class ComptabiliteManagerImplTest {
 
     @AfterEach
     public void endTest() {
+        manager = null;
         logger.info("Fin du test");
     }
 
@@ -51,11 +54,10 @@ public class ComptabiliteManagerImplTest {
     }
 
     @Test
-    //(expected = FunctionalException.class)
-    public void checkEcritureComptableUnitViolation() throws Exception {
+    public void checkEcritureComptableUnitViolation() throws FunctionalException {
         EcritureComptable vEcritureComptable;
         vEcritureComptable = new EcritureComptable();
-        manager.checkEcritureComptableUnit(vEcritureComptable);
+        Assert.assertThrows(FunctionalException.class, () -> manager.checkEcritureComptableUnit(vEcritureComptable));
     }
 
     @Test
