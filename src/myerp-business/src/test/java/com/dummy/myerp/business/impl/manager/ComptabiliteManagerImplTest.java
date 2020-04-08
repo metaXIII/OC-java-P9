@@ -4,19 +4,34 @@ import com.dummy.myerp.model.bean.comptabilite.CompteComptable;
 import com.dummy.myerp.model.bean.comptabilite.EcritureComptable;
 import com.dummy.myerp.model.bean.comptabilite.JournalComptable;
 import com.dummy.myerp.model.bean.comptabilite.LigneEcritureComptable;
+import lib.LoggingExtension;
+import org.apache.logging.log4j.Logger;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 
 import java.math.BigDecimal;
 import java.util.Date;
 
+@ExtendWith(LoggingExtension.class)
 public class ComptabiliteManagerImplTest {
-
+    private Logger                  logger;
     private ComptabiliteManagerImpl manager;
 
+    public void setLogger(Logger logger) {
+        this.logger = logger;
+    }
+
     @BeforeEach
-    public void init() {
+    public void initTest() {
+        logger.info("Début du test");
         manager = new ComptabiliteManagerImpl();
+    }
+
+    @AfterEach
+    public void endTest() {
+        logger.info("Fin du test");
     }
 
     @Test
