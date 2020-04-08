@@ -8,9 +8,7 @@ import com.dummy.myerp.technical.exception.FunctionalException;
 import lib.LoggingExtension;
 import org.apache.logging.log4j.Logger;
 import org.junit.Assert;
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.*;
 import org.junit.jupiter.api.extension.ExtendWith;
 
 import java.math.BigDecimal;
@@ -54,32 +52,32 @@ public class ComptabiliteManagerImplTest {
     }
 
     @Test
-    public void checkEcritureComptableUnitViolation() throws FunctionalException {
+    public void checkEcritureComptableUnitViolation() {
         EcritureComptable vEcritureComptable;
         vEcritureComptable = new EcritureComptable();
         Assert.assertThrows(FunctionalException.class, () -> manager.checkEcritureComptableUnit(vEcritureComptable));
     }
 
     @Test
-    //(expected = FunctionalException.class)
-    public void checkEcritureComptableUnitRG2() throws Exception {
+    public void checkEcritureComptableUnitRG2() {
         EcritureComptable vEcritureComptable;
         vEcritureComptable = new EcritureComptable();
         vEcritureComptable.setJournal(new JournalComptable("AC", "Achat"));
         vEcritureComptable.setDate(new Date());
         vEcritureComptable.setLibelle("Libelle");
+        //Débit
         vEcritureComptable.getListLigneEcriture().add(new LigneEcritureComptable(new CompteComptable(1),
                                                                                  null, new BigDecimal(123),
                                                                                  null));
+        //Crédit
         vEcritureComptable.getListLigneEcriture().add(new LigneEcritureComptable(new CompteComptable(2),
                                                                                  null, null,
                                                                                  new BigDecimal(1234)));
-        manager.checkEcritureComptableUnit(vEcritureComptable);
+        Assert.assertThrows(FunctionalException.class, () -> manager.checkEcritureComptableUnit(vEcritureComptable));
     }
 
     @Test
-    //(expected = FunctionalException.class)
-    public void checkEcritureComptableUnitRG3() throws Exception {
+    public void checkEcritureComptableUnitRG3() {
         EcritureComptable vEcritureComptable;
         vEcritureComptable = new EcritureComptable();
         vEcritureComptable.setJournal(new JournalComptable("AC", "Achat"));
@@ -91,7 +89,7 @@ public class ComptabiliteManagerImplTest {
         vEcritureComptable.getListLigneEcriture().add(new LigneEcritureComptable(new CompteComptable(1),
                                                                                  null, new BigDecimal(123),
                                                                                  null));
-        manager.checkEcritureComptableUnit(vEcritureComptable);
+        Assert.assertThrows(FunctionalException.class, () -> manager.checkEcritureComptableUnit(vEcritureComptable));
     }
 
 }
