@@ -2,10 +2,7 @@ package com.dummy.myerp.business.impl.manager;
 
 import com.dummy.myerp.business.contrat.manager.ComptabiliteManager;
 import com.dummy.myerp.business.impl.AbstractBusinessManager;
-import com.dummy.myerp.model.bean.comptabilite.CompteComptable;
-import com.dummy.myerp.model.bean.comptabilite.EcritureComptable;
-import com.dummy.myerp.model.bean.comptabilite.JournalComptable;
-import com.dummy.myerp.model.bean.comptabilite.LigneEcritureComptable;
+import com.dummy.myerp.model.bean.comptabilite.*;
 import com.dummy.myerp.technical.exception.FunctionalException;
 import com.dummy.myerp.technical.exception.NotFoundException;
 import org.apache.commons.lang3.ObjectUtils;
@@ -15,6 +12,7 @@ import org.springframework.transaction.TransactionStatus;
 import javax.validation.ConstraintViolation;
 import javax.validation.ConstraintViolationException;
 import java.math.BigDecimal;
+import java.text.SimpleDateFormat;
 import java.util.List;
 import java.util.Set;
 
@@ -23,25 +21,13 @@ import java.util.Set;
  * Comptabilite manager implementation.
  */
 public class ComptabiliteManagerImpl extends AbstractBusinessManager implements ComptabiliteManager {
-
-    // ==================== Attributs ====================
-
-
-    // ==================== Constructeurs ====================
-
-    /**
-     * Instantiates a new Comptabilite manager.
-     */
     public ComptabiliteManagerImpl() {
     }
 
-
-    // ==================== Getters/Setters ====================
     @Override
     public List<CompteComptable> getListCompteComptable() {
         return getDaoProxy().getComptabiliteDao().getListCompteComptable();
     }
-
 
     @Override
     public List<JournalComptable> getListJournalComptable() {
@@ -61,20 +47,32 @@ public class ComptabiliteManagerImpl extends AbstractBusinessManager implements 
      */
     // TODO à tester
     @Override
-    public synchronized void addReference(EcritureComptable pEcritureComptable) {
+    public synchronized void addReference(EcritureComptable pEcritureComptable) throws NotFoundException {
         // TODO à implémenter
         // Bien se réferer à la JavaDoc de cette méthode !
         /* Le principe :
-                1.  Remonter depuis la persitance la dernière valeur de la séquence du journal pour l'année de
-                l'écriture
-                    (table sequence_ecriture_comptable)
-                2.  * S'il n'y a aucun enregistrement pour le journal pour l'année concernée :
-                        1. Utiliser le numéro 1.
-                    * Sinon :
-                        1. Utiliser la dernière valeur + 1
-                3.  Mettre à jour la référence de l'écriture avec la référence calculée (RG_Compta_5)
-                4.  Enregistrer (insert/update) la valeur de la séquence en persitance
-                    (table sequence_ecriture_comptable)
+         * 1.  Remonter depuis la persitance la dernière valeur de la séquence du journal pour l'année de
+         * l'écriture (table sequence_ecriture_comptable)
+         */
+        int ecritureCompable =
+                Integer.parseInt(new SimpleDateFormat("yyyy").format(pEcritureComptable.getDate()));
+        SequenceEcritureComptable sequenceEcritureComptable = new SequenceEcritureComptable();
+        sequenceEcritureComptable.setJournalCode(pEcritureComptable.getJournal().getCode());
+        sequenceEcritureComptable.setAnnee(ecritureCompable);
+        SequenceEcritureComptable exist = getDaoProxy().getComptabiliteDao()
+                .getSequenceEcritureComptableByAnneeAndCode(sequenceEcritureComptable);
+        /**
+         * 2.  * S'il n'y a aucun enregistrement pour le journal pour l'année concernée :
+         * 1. Utiliser le numéro 1.
+         *      Sinon :
+         * 1. Utiliser la dernière valeur + 1
+         */
+        /**
+         * 3.  Mettre à jour la référence de l'écriture avec la référence calculée (RG_Compta_5)
+         */
+        /**
+         * 4.  Enregistrer (insert/update) la valeur de la séquence en persitance
+         *                     (table sequence_ecriture_comptable)
          */
     }
 
@@ -125,14 +123,10 @@ public class ComptabiliteManagerImpl extends AbstractBusinessManager implements 
                 vNbrDebit++;
             }
         }
-        // On test le nombre de lignes car si l'écriture à une seule ligne
-        //      avec un montant au débit et un montant au crédit ce n'est pas valable
-        if (pEcritureComptable.getListLigneEcriture().size() < 2
-                || vNbrCredit < 1
-                || vNbrDebit < 1) {
-            throw new FunctionalException(
-                    "L'écriture comptable doit avoir au moins deux lignes : une ligne au débit et une ligne au crédit" +
-                            ".");
+        //Exceptions normalement lancée auparavant
+        if (pEcritureComptable.getListLigneEcriture().size() < 2 || vNbrCredit < 1 || vNbrDebit < 1) {
+            throw new FunctionalException("L'écriture comptable doit avoir au moins deux lignes : une ligne au débit " +
+                                                  "et une ligne au crédit.");
         }
         // TODO ===== RG_Compta_5 : Format et contenu de la référence
         // vérifier que l'année dans la référence correspond bien à la date de l'écriture, idem pour le code journal...
