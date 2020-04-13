@@ -29,7 +29,6 @@ import java.util.Date;
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
 
@@ -45,6 +44,11 @@ public class ComptabiliteManagerImplTest {
     @Mock
     private JournalComptable        journalComptable;
 
+    @Mock
+    private BusinessProxy businessProxy;
+
+    @Mock
+    private TransactionManager transactionManager;
 
     @Mock
     private DaoProxy daoProxy;
@@ -202,15 +206,11 @@ public class ComptabiliteManagerImplTest {
         ecritureComptable.getListLigneEcriture().add(new LigneEcritureComptable(new CompteComptable(2),
                                                                                 null, null,
                                                                                 new BigDecimal(123)));
-        AbstractBusinessManager.configure(mock(BusinessProxy.class),
+        AbstractBusinessManager.configure(businessProxy,
                                           daoProxy,
-                                          mock(TransactionManager.class));
+                                          transactionManager);
         when(daoProxy.getComptabiliteDao()).thenReturn(comptabiliteDao);
         when(comptabiliteDao.getEcritureComptableByRef(any())).thenReturn(new EcritureComptable());
-        //        when(abstractBusinessManager.getDaoProxy()).thenReturn(daoProxy);
-        //        when(abstractBusinessManager.getDaoProxy().getComptabiliteDao()).thenReturn(any());
-        //        when(comptabiliteManager.getDaoProxy()).thenReturn(daoProxy);
-        //        when(comptabiliteManager.getDaoProxy().getComptabiliteDao()).thenReturn(any());
         comptabiliteManager.checkEcritureComptable(ecritureComptable);
     }
 }
