@@ -2,7 +2,10 @@ package com.dummy.myerp.business.impl.manager;
 
 import com.dummy.myerp.business.contrat.manager.ComptabiliteManager;
 import com.dummy.myerp.business.impl.AbstractBusinessManager;
-import com.dummy.myerp.model.bean.comptabilite.*;
+import com.dummy.myerp.model.bean.comptabilite.CompteComptable;
+import com.dummy.myerp.model.bean.comptabilite.EcritureComptable;
+import com.dummy.myerp.model.bean.comptabilite.JournalComptable;
+import com.dummy.myerp.model.bean.comptabilite.LigneEcritureComptable;
 import com.dummy.myerp.technical.exception.FunctionalException;
 import com.dummy.myerp.technical.exception.NotFoundException;
 import org.apache.commons.lang3.ObjectUtils;
@@ -12,7 +15,6 @@ import org.springframework.transaction.TransactionStatus;
 import javax.validation.ConstraintViolation;
 import javax.validation.ConstraintViolationException;
 import java.math.BigDecimal;
-import java.text.SimpleDateFormat;
 import java.util.List;
 import java.util.Set;
 
@@ -54,13 +56,6 @@ public class ComptabiliteManagerImpl extends AbstractBusinessManager implements 
          * 1.  Remonter depuis la persitance la dernière valeur de la séquence du journal pour l'année de
          * l'écriture (table sequence_ecriture_comptable)
          */
-        int ecritureCompable =
-                Integer.parseInt(new SimpleDateFormat("yyyy").format(pEcritureComptable.getDate()));
-        SequenceEcritureComptable sequenceEcritureComptable = new SequenceEcritureComptable();
-        sequenceEcritureComptable.setJournalCode(pEcritureComptable.getJournal().getCode());
-        sequenceEcritureComptable.setAnnee(ecritureCompable);
-        SequenceEcritureComptable exist = getDaoProxy().getComptabiliteDao()
-                .getSequenceEcritureComptableByAnneeAndCode(sequenceEcritureComptable);
         /**
          * 2.  * S'il n'y a aucun enregistrement pour le journal pour l'année concernée :
          * 1. Utiliser le numéro 1.

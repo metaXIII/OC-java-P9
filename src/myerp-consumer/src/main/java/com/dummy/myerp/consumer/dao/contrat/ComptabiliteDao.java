@@ -84,6 +84,4 @@ public interface ComptabiliteDao {
      * @param pId l'id de l'écriture
      */
     void deleteEcritureComptable(Integer pId);
-
-    SequenceEcritureComptable getSequenceEcritureComptableByAnneeAndCode(SequenceEcritureComptable sequenceEcritureComptable) throws NotFoundException;
 }
