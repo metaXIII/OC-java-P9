@@ -61,7 +61,6 @@ public abstract class AbstractBusinessManager {
         return daoProxy;
     }
 
-
     /**
      * Renvoie le gestionnaire de Transaction
      *
