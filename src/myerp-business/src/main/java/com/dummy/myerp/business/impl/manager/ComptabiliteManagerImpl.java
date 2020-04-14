@@ -18,7 +18,6 @@ import javax.validation.ConstraintViolationException;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.Calendar;
-import java.util.GregorianCalendar;
 import java.util.List;
 import java.util.Set;
 
@@ -60,9 +59,8 @@ public class ComptabiliteManagerImpl extends AbstractBusinessManager implements 
          * l'écriture (table sequence_ecriture_comptable)
          */
         EcritureComptable lastEcritureComptable;
-        Calendar          calendar = new GregorianCalendar();
+        Calendar          calendar = Calendar.getInstance();
         calendar.setTime(pEcritureComptable.getDate());
-        int           date      = calendar.get(Calendar.YEAR);
         StringBuilder ref       = new StringBuilder();
         String        reference = StringUtils.EMPTY;
         /**
@@ -74,18 +72,16 @@ public class ComptabiliteManagerImpl extends AbstractBusinessManager implements 
         try {
             ref.append(pEcritureComptable.getJournal().getCode());
             ref.append("-");
-            ref.append(date);
+            ref.append(calendar.get(Calendar.YEAR));
             ref.append("/");
             lastEcritureComptable = getListEcritureComptable().get(getListEcritureComptable().size() - 1);
-            if (calendar.get(date) == LocalDate.now().getYear()) {
-                reference = String.format(lastEcritureComptable.getReference());
+            if (calendar.get(Calendar.YEAR) == LocalDate.now().getYear()) {
+                reference = lastEcritureComptable.getReference();
             }
-            if (reference.isEmpty())
-                reference = String.format("%05d", 0);
             /**
              * 3.  Mettre à jour la référence de l'écriture avec la référence calculée (RG_Compta_5)
              */
-            reference = String.valueOf(Integer.parseInt(reference) + 1);
+            reference = String.valueOf(String.format("%05d", Integer.parseInt(reference.substring(8, 13)) + 1));
             /**
              * 4.  Enregistrer (insert/update) la valeur de la séquence en persitance
              *                     (table sequence_ecriture_comptable)

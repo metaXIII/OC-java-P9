@@ -23,8 +23,10 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
@@ -99,6 +101,19 @@ public class ComptabiliteManagerImplTest {
         comptabiliteManager.addReference(ecritureComptable);
         assertThrows(FunctionalException.class,
                      () -> comptabiliteManager.checkEcritureComptableUnit(ecritureComptable));
+    }
+
+    @Test
+    public void shouldAddOneReferencePlusOneWhenAResultIsProvidedOnAddReference() throws NotFoundException {
+        when(daoProxy.getComptabiliteDao()).thenReturn(comptabiliteDao);
+        when(comptabiliteDao.getListEcritureComptable()).thenReturn(mockListEcritureComptable());
+        journalComptable = new JournalComptable();
+        journalComptable.setCode("AB");
+        ecritureComptable.setReference(null);
+        ecritureComptable.setJournal(journalComptable);
+        ecritureComptable.setDate(new Date());
+        comptabiliteManager.addReference(ecritureComptable);
+        assertEquals("AB-2020/00002", ecritureComptable.getReference());
     }
 
 
@@ -228,6 +243,24 @@ public class ComptabiliteManagerImplTest {
         assertThrows(FunctionalException.class, () -> comptabiliteManager.checkEcritureComptable(ecritureComptable));
     }
 
+    @Test
+    public void shouldThrowNullPointerExceptionWhenListComptableIsAskAndDAOProxIsNotMocked() {
+        assertThrows(NullPointerException.class, () -> comptabiliteManager.getListCompteComptable());
+    }
+
+    @Test
+    public void shouldReturnListWhenListComptableIsAsked() {
+        when(daoProxy.getComptabiliteDao()).thenReturn(comptabiliteDao);
+        when(comptabiliteDao.getListCompteComptable()).thenReturn(new ArrayList<CompteComptable>());
+        assertDoesNotThrow(() -> comptabiliteManager.getListCompteComptable());
+    }
+
+    @Test
+    public void shouldReturnListWhenJournalComptableIsAsked() {
+        when(daoProxy.getComptabiliteDao()).thenReturn(comptabiliteDao);
+        when(comptabiliteDao.getListCompteComptable()).thenReturn(new ArrayList<>());
+        assertDoesNotThrow(() -> comptabiliteManager.getListCompteComptable());
+    }
 
 
     /**
@@ -237,6 +270,13 @@ public class ComptabiliteManagerImplTest {
     private EcritureComptable mockEcritureComptable() {
         EcritureComptable ecritureComptable = new EcritureComptable();
         ecritureComptable.setId(1);
+        ecritureComptable.setReference("BQ-2016/00001");
         return ecritureComptable;
+    }
+
+    private List<EcritureComptable> mockListEcritureComptable() {
+        List<EcritureComptable> list = new ArrayList<>();
+        list.add(mockEcritureComptable());
+        return list;
     }
 }
