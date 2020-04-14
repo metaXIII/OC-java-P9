@@ -26,8 +26,7 @@ import java.math.BigDecimal;
 import java.util.Calendar;
 import java.util.Date;
 
-import static org.junit.jupiter.api.Assertions.assertNotEquals;
-import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
 
@@ -37,29 +36,28 @@ import static org.mockito.Mockito.when;
 public class ComptabiliteManagerImplTest {
 
 
+    @Mock
+    private static BusinessProxy           businessProxy;
+    @Mock
+    private static TransactionManager      transactionManager;
+    @Mock
+    private static DaoProxy                daoProxy;
     @InjectMocks
-    private ComptabiliteManagerImpl comptabiliteManager;
+    private        ComptabiliteManagerImpl comptabiliteManager;
     @Mock
-    private EcritureComptable       ecritureComptable;
+    private        EcritureComptable       ecritureComptable;
     @Mock
-    private JournalComptable        journalComptable;
-
+    private        JournalComptable        journalComptable;
     @Mock
-    private BusinessProxy businessProxy;
-
-    @Mock
-    private TransactionManager transactionManager;
-
-    @Mock
-    private DaoProxy daoProxy;
-
-    @Mock
-    private ComptabiliteDaoImpl comptabiliteDao;
+    private        ComptabiliteDaoImpl     comptabiliteDao;
 
     @BeforeEach
     public void initTest() {
         log.info("Début du test");
         ecritureComptable = new EcritureComptable();
+        AbstractBusinessManager.configure(businessProxy,
+                                          daoProxy,
+                                          transactionManager);
     }
 
     @AfterEach
@@ -195,22 +193,50 @@ public class ComptabiliteManagerImplTest {
     }
 
     @Test
-    public void checkEcritureComptable() throws FunctionalException, NotFoundException {
+    public void checkEcritureComptable() throws NotFoundException {
         ecritureComptable.setDate(new Date());
         ecritureComptable.setJournal(new JournalComptable());
         ecritureComptable.setReference("AZ-0000/00001");
         ecritureComptable.setLibelle("aze");
+        ecritureComptable.setId(1);
         ecritureComptable.getListLigneEcriture().add(new LigneEcritureComptable(new CompteComptable(1),
                                                                                 null, new BigDecimal(123),
                                                                                 null));
         ecritureComptable.getListLigneEcriture().add(new LigneEcritureComptable(new CompteComptable(2),
                                                                                 null, null,
                                                                                 new BigDecimal(123)));
-        AbstractBusinessManager.configure(businessProxy,
-                                          daoProxy,
-                                          transactionManager);
+        when(daoProxy.getComptabiliteDao()).thenReturn(comptabiliteDao);
+        when(comptabiliteDao.getEcritureComptableByRef(any())).thenReturn(this.mockEcritureComptable());
+        assertDoesNotThrow(() -> comptabiliteManager.checkEcritureComptable(ecritureComptable));
+    }
+
+    @Test
+    public void shouldThrowFunctionnalExceptionWhenEcritureComptableFoundDoesNotContainsId() throws NotFoundException {
+        ecritureComptable.setDate(new Date());
+        ecritureComptable.setJournal(new JournalComptable());
+        ecritureComptable.setReference("AZ-0000/00001");
+        ecritureComptable.setLibelle("aze");
+        ecritureComptable.setId(1);
+        ecritureComptable.getListLigneEcriture().add(new LigneEcritureComptable(new CompteComptable(1),
+                                                                                null, new BigDecimal(123),
+                                                                                null));
+        ecritureComptable.getListLigneEcriture().add(new LigneEcritureComptable(new CompteComptable(2),
+                                                                                null, null,
+                                                                                new BigDecimal(123)));
         when(daoProxy.getComptabiliteDao()).thenReturn(comptabiliteDao);
         when(comptabiliteDao.getEcritureComptableByRef(any())).thenReturn(new EcritureComptable());
-        comptabiliteManager.checkEcritureComptable(ecritureComptable);
+        assertThrows(FunctionalException.class, () -> comptabiliteManager.checkEcritureComptable(ecritureComptable));
+    }
+
+
+
+    /**
+     * @return Ecriture comptable
+     * methode pour mocker une nouvelle ecriture comptable qui sera a comparé
+     */
+    private EcritureComptable mockEcritureComptable() {
+        EcritureComptable ecritureComptable = new EcritureComptable();
+        ecritureComptable.setId(1);
+        return ecritureComptable;
     }
 }
