@@ -119,8 +119,9 @@ public class ComptabiliteManagerImplTest {
 
     @Test
     public void checkEcritureComptableUnit() throws Exception {
-        ecritureComptable.setJournal(new JournalComptable("AC", "Achat"));
+        ecritureComptable.setJournal(new JournalComptable("BQ", "Achat"));
         ecritureComptable.setDate(new Date());
+        ecritureComptable.setReference("BQ-2020/00001");
         ecritureComptable.setLibelle("Libelle");
         ecritureComptable.getListLigneEcriture().add(new LigneEcritureComptable(new CompteComptable(1),
                                                                                 null, new BigDecimal(123),
