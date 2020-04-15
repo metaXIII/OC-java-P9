@@ -20,6 +20,7 @@ import java.math.BigDecimal;
 import java.util.Date;
 
 import static org.junit.Assert.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 
 @ExtendWith(SpringExtension.class)
 @Transactional
@@ -55,26 +56,26 @@ public class ComptabiliteManagerImplIT {
 
     @Test
     public void testInit() {
-        SpringRegistry.init();
+        assertDoesNotThrow(SpringRegistry::init);
         assertNotNull(SpringRegistry.getBusinessProxy());
         assertNotNull(SpringRegistry.getTransactionManager());
     }
 
 
     @Test
-    public void insertEcritureComptableTest() throws FunctionalException {
-        comptabiliteManager.insertEcritureComptable(ecritureComptable);
+    public void insertEcritureComptableTest() {
+        assertDoesNotThrow(() -> comptabiliteManager.insertEcritureComptable(ecritureComptable));
     }
 
     @Test
-    public void updateEcritureComptable() throws FunctionalException {
+    public void updateEcritureComptable() {
         ecritureComptable = comptabiliteManager.getListEcritureComptable().get(1);
         ecritureComptable.setLibelle("Un nouveau libelle");
-        comptabiliteManager.updateEcritureComptable(ecritureComptable);
+        assertDoesNotThrow(() -> comptabiliteManager.updateEcritureComptable(ecritureComptable));
     }
 
     @Test
     public void deleteEcritureComptableTest() {
-        comptabiliteManager.deleteEcritureComptable(1);
+        assertDoesNotThrow(() -> comptabiliteManager.deleteEcritureComptable(1));
     }
 }
