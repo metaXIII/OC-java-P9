@@ -144,7 +144,8 @@ public class ComptabiliteManagerImplTest {
         ecritureComptable.getListLigneEcriture().add(new LigneEcritureComptable(new CompteComptable(2),
                                                                                 null, null,
                                                                                 new BigDecimal(123)));
-        assertThrows(FunctionalException.class, () ->comptabiliteManager.checkEcritureComptableUnit(ecritureComptable));
+        assertThrows(FunctionalException.class,
+                     () -> comptabiliteManager.checkEcritureComptableUnit(ecritureComptable));
     }
 
 
@@ -160,7 +161,7 @@ public class ComptabiliteManagerImplTest {
         ecritureComptable.getListLigneEcriture().add(new LigneEcritureComptable(new CompteComptable(2),
                                                                                 null, null,
                                                                                 new BigDecimal(123)));
-        assertThrows(Exception.class, () ->comptabiliteManager.checkEcritureComptableUnit(ecritureComptable));
+        assertThrows(Exception.class, () -> comptabiliteManager.checkEcritureComptableUnit(ecritureComptable));
     }
 
     @Test
@@ -175,14 +176,15 @@ public class ComptabiliteManagerImplTest {
         ecritureComptable.getListLigneEcriture().add(new LigneEcritureComptable(new CompteComptable(2),
                                                                                 null, null,
                                                                                 new BigDecimal(123)));
-        assertThrows(FunctionalException.class, () ->comptabiliteManager.checkEcritureComptableUnit(ecritureComptable));
+        assertThrows(FunctionalException.class,
+                     () -> comptabiliteManager.checkEcritureComptableUnit(ecritureComptable));
     }
 
 
     @Test
     public void checkEcritureComptableUnitViolation() {
         assertThrows(FunctionalException.class,
-                            () -> comptabiliteManager.checkEcritureComptableUnit(ecritureComptable));
+                     () -> comptabiliteManager.checkEcritureComptableUnit(ecritureComptable));
     }
 
     @Test
@@ -314,7 +316,47 @@ public class ComptabiliteManagerImplTest {
         assertDoesNotThrow(() -> comptabiliteManager.getListJournalComptable());
     }
 
+    @Test
+    public void shouldInsertEcritureComptable() throws FunctionalException, NotFoundException {
+        ecritureComptable.setId(1);
+        ecritureComptable.setDate(new Date());
+        ecritureComptable.setJournal(new JournalComptable("AZ", "aze"));
+        ecritureComptable.setReference("AZ-2020/00001");
+        ecritureComptable.setLibelle("aze");
+        ecritureComptable.getListLigneEcriture().add(new LigneEcritureComptable(new CompteComptable(1),
+                                                                                null, new BigDecimal(123),
+                                                                                null));
+        ecritureComptable.getListLigneEcriture().add(new LigneEcritureComptable(new CompteComptable(2),
+                                                                                null, null,
+                                                                                new BigDecimal(123)));
+        when(daoProxy.getComptabiliteDao()).thenReturn(comptabiliteDao);
+        when(comptabiliteDao.getEcritureComptableByRef(any())).thenReturn(mockEcritureComptable());
+        comptabiliteManager.insertEcritureComptable(ecritureComptable);
+    }
 
+    @Test
+    public void shouldUpdateEcritureComptable() throws FunctionalException, NotFoundException {
+        ecritureComptable.setId(1);
+        ecritureComptable.setDate(new Date());
+        ecritureComptable.setJournal(new JournalComptable("AZ", "aze"));
+        ecritureComptable.setReference("AZ-2020/00001");
+        ecritureComptable.setLibelle("aze");
+        ecritureComptable.getListLigneEcriture().add(new LigneEcritureComptable(new CompteComptable(1),
+                                                                                null, new BigDecimal(123),
+                                                                                null));
+        ecritureComptable.getListLigneEcriture().add(new LigneEcritureComptable(new CompteComptable(2),
+                                                                                null, null,
+                                                                                new BigDecimal(123)));
+        when(daoProxy.getComptabiliteDao()).thenReturn(comptabiliteDao);
+        comptabiliteManager.updateEcritureComptable(ecritureComptable);
+    }
+
+
+    @Test
+    public void shouldDeleteEcritureComptable() {
+        when(daoProxy.getComptabiliteDao()).thenReturn(comptabiliteDao);
+        comptabiliteManager.deleteEcritureComptable(1);
+    }
 
 
     /**
