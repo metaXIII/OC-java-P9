@@ -133,7 +133,7 @@ public class ComptabiliteManagerImplTest {
     }
 
     @Test
-    public void shouldThrowExceptionWhenReferenceDoesNotContainsCodeJournal() throws Exception {
+    public void shouldThrowExceptionWhenReferenceDoesNotContainsCodeJournal() {
         ecritureComptable.setJournal(new JournalComptable("AC", "Achat"));
         ecritureComptable.setDate(new Date());
         ecritureComptable.setReference("BQ-2020/00001");
@@ -150,7 +150,7 @@ public class ComptabiliteManagerImplTest {
 
 
     @Test
-    public void shouldThrowExceptionWhenBadYearIsProvidedInsideReference() throws Exception {
+    public void shouldThrowExceptionWhenBadYearIsProvidedInsideReference() {
         ecritureComptable.setJournal(new JournalComptable("AC", "Achat"));
         ecritureComptable.setDate(new Date());
         ecritureComptable.setReference("BQ-2019/00001");
@@ -165,7 +165,7 @@ public class ComptabiliteManagerImplTest {
     }
 
     @Test
-    public void shouldThrowFunctionalExceptionWhenEmptyJournalIsProvided() throws Exception {
+    public void shouldThrowFunctionalExceptionWhenEmptyJournalIsProvided() {
         ecritureComptable.setJournal(new JournalComptable());
         ecritureComptable.setDate(new Date());
         ecritureComptable.setReference("BQ-2019/00001");
@@ -317,7 +317,7 @@ public class ComptabiliteManagerImplTest {
     }
 
     @Test
-    public void shouldInsertEcritureComptable() throws FunctionalException, NotFoundException {
+    public void shouldInsertEcritureComptable() throws NotFoundException {
         ecritureComptable.setId(1);
         ecritureComptable.setDate(new Date());
         ecritureComptable.setJournal(new JournalComptable("AZ", "aze"));
@@ -331,11 +331,11 @@ public class ComptabiliteManagerImplTest {
                                                                                 new BigDecimal(123)));
         when(daoProxy.getComptabiliteDao()).thenReturn(comptabiliteDao);
         when(comptabiliteDao.getEcritureComptableByRef(any())).thenReturn(mockEcritureComptable());
-        comptabiliteManager.insertEcritureComptable(ecritureComptable);
+        assertDoesNotThrow(() -> comptabiliteManager.insertEcritureComptable(ecritureComptable));
     }
 
     @Test
-    public void shouldUpdateEcritureComptable() throws FunctionalException, NotFoundException {
+    public void shouldUpdateEcritureComptable() {
         ecritureComptable.setId(1);
         ecritureComptable.setDate(new Date());
         ecritureComptable.setJournal(new JournalComptable("AZ", "aze"));
@@ -348,14 +348,14 @@ public class ComptabiliteManagerImplTest {
                                                                                 null, null,
                                                                                 new BigDecimal(123)));
         when(daoProxy.getComptabiliteDao()).thenReturn(comptabiliteDao);
-        comptabiliteManager.updateEcritureComptable(ecritureComptable);
+        assertDoesNotThrow(() -> comptabiliteManager.updateEcritureComptable(ecritureComptable));
     }
 
 
     @Test
     public void shouldDeleteEcritureComptable() {
         when(daoProxy.getComptabiliteDao()).thenReturn(comptabiliteDao);
-        comptabiliteManager.deleteEcritureComptable(1);
+        assertDoesNotThrow(() -> comptabiliteManager.deleteEcritureComptable(1));
     }
 
 
