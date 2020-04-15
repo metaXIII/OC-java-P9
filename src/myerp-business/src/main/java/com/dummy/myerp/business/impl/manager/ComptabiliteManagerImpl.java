@@ -147,16 +147,14 @@ public class ComptabiliteManagerImpl extends AbstractBusinessManager implements 
         }
         // TODO ===== RG_Compta_5 : Format et contenu de la référence
         // vérifier que l'année dans la référence correspond bien à la date de l'écriture, idem pour le code journal...
-        try {
-            Calendar calendar = Calendar.getInstance();
-            calendar.setTime(pEcritureComptable.getDate());
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(pEcritureComptable.getDate());
+        if (pEcritureComptable.getReference() != null && pEcritureComptable.getJournal() != null) {
             if (Integer.parseInt(pEcritureComptable.getReference().substring(3, 7)) != calendar.get(Calendar.YEAR)
                     || !pEcritureComptable.getJournal().getCode().equals(pEcritureComptable.getReference().substring(0, 2)))
-                throw new Exception("L'année est différente");
-        } catch (Exception e) {
-            log.error(e.getMessage());
-        }
-
+                throw new FunctionalException("L'année est différente");
+        } else
+            throw new FunctionalException("Des informations sont manquantes, merci de vérifier votre saisie");
     }
 
 

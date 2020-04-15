@@ -133,8 +133,55 @@ public class ComptabiliteManagerImplTest {
     }
 
     @Test
+    public void shouldThrowExceptionWhenReferenceDoesNotContainsCodeJournal() throws Exception {
+        ecritureComptable.setJournal(new JournalComptable("AC", "Achat"));
+        ecritureComptable.setDate(new Date());
+        ecritureComptable.setReference("BQ-2020/00001");
+        ecritureComptable.setLibelle("Libelle");
+        ecritureComptable.getListLigneEcriture().add(new LigneEcritureComptable(new CompteComptable(1),
+                                                                                null, new BigDecimal(123),
+                                                                                null));
+        ecritureComptable.getListLigneEcriture().add(new LigneEcritureComptable(new CompteComptable(2),
+                                                                                null, null,
+                                                                                new BigDecimal(123)));
+        assertThrows(FunctionalException.class, () ->comptabiliteManager.checkEcritureComptableUnit(ecritureComptable));
+    }
+
+
+    @Test
+    public void shouldThrowExceptionWhenBadYearIsProvidedInsideReference() throws Exception {
+        ecritureComptable.setJournal(new JournalComptable("AC", "Achat"));
+        ecritureComptable.setDate(new Date());
+        ecritureComptable.setReference("BQ-2019/00001");
+        ecritureComptable.setLibelle("Libelle");
+        ecritureComptable.getListLigneEcriture().add(new LigneEcritureComptable(new CompteComptable(1),
+                                                                                null, new BigDecimal(123),
+                                                                                null));
+        ecritureComptable.getListLigneEcriture().add(new LigneEcritureComptable(new CompteComptable(2),
+                                                                                null, null,
+                                                                                new BigDecimal(123)));
+        assertThrows(Exception.class, () ->comptabiliteManager.checkEcritureComptableUnit(ecritureComptable));
+    }
+
+    @Test
+    public void shouldThrowFunctionalExceptionWhenEmptyJournalIsProvided() throws Exception {
+        ecritureComptable.setJournal(new JournalComptable());
+        ecritureComptable.setDate(new Date());
+        ecritureComptable.setReference("BQ-2019/00001");
+        ecritureComptable.setLibelle("Libelle");
+        ecritureComptable.getListLigneEcriture().add(new LigneEcritureComptable(new CompteComptable(1),
+                                                                                null, new BigDecimal(123),
+                                                                                null));
+        ecritureComptable.getListLigneEcriture().add(new LigneEcritureComptable(new CompteComptable(2),
+                                                                                null, null,
+                                                                                new BigDecimal(123)));
+        assertThrows(FunctionalException.class, () ->comptabiliteManager.checkEcritureComptableUnit(ecritureComptable));
+    }
+
+
+    @Test
     public void checkEcritureComptableUnitViolation() {
-        Assert.assertThrows(FunctionalException.class,
+        assertThrows(FunctionalException.class,
                             () -> comptabiliteManager.checkEcritureComptableUnit(ecritureComptable));
     }
 
@@ -211,8 +258,8 @@ public class ComptabiliteManagerImplTest {
     @Test
     public void checkEcritureComptable() throws NotFoundException {
         ecritureComptable.setDate(new Date());
-        ecritureComptable.setJournal(new JournalComptable());
-        ecritureComptable.setReference("AZ-0000/00001");
+        ecritureComptable.setJournal(new JournalComptable("AZ", "aze"));
+        ecritureComptable.setReference("AZ-2020/00001");
         ecritureComptable.setLibelle("aze");
         ecritureComptable.setId(1);
         ecritureComptable.getListLigneEcriture().add(new LigneEcritureComptable(new CompteComptable(1),
@@ -229,10 +276,9 @@ public class ComptabiliteManagerImplTest {
     @Test
     public void shouldThrowFunctionnalExceptionWhenEcritureComptableFoundDoesNotContainsId() throws NotFoundException {
         ecritureComptable.setDate(new Date());
-        ecritureComptable.setJournal(new JournalComptable());
-        ecritureComptable.setReference("AZ-0000/00001");
+        ecritureComptable.setJournal(new JournalComptable("AZ", "aze"));
+        ecritureComptable.setReference("AZ-2020/00001");
         ecritureComptable.setLibelle("aze");
-        ecritureComptable.setId(1);
         ecritureComptable.getListLigneEcriture().add(new LigneEcritureComptable(new CompteComptable(1),
                                                                                 null, new BigDecimal(123),
                                                                                 null));
@@ -240,7 +286,7 @@ public class ComptabiliteManagerImplTest {
                                                                                 null, null,
                                                                                 new BigDecimal(123)));
         when(daoProxy.getComptabiliteDao()).thenReturn(comptabiliteDao);
-        when(comptabiliteDao.getEcritureComptableByRef(any())).thenReturn(new EcritureComptable());
+        when(comptabiliteDao.getEcritureComptableByRef(any())).thenReturn(ecritureComptable);
         assertThrows(FunctionalException.class, () -> comptabiliteManager.checkEcritureComptable(ecritureComptable));
     }
 
@@ -250,18 +296,25 @@ public class ComptabiliteManagerImplTest {
     }
 
     @Test
+    public void shouldThrowNullPointerExceptionWhenJournalComptableIsAskAndDAOProxIsNotMocked() {
+        assertThrows(NullPointerException.class, () -> comptabiliteManager.getListJournalComptable());
+    }
+
+    @Test
     public void shouldReturnListWhenListComptableIsAsked() {
         when(daoProxy.getComptabiliteDao()).thenReturn(comptabiliteDao);
-        when(comptabiliteDao.getListCompteComptable()).thenReturn(new ArrayList<CompteComptable>());
+        when(comptabiliteDao.getListCompteComptable()).thenReturn(new ArrayList<>());
         assertDoesNotThrow(() -> comptabiliteManager.getListCompteComptable());
     }
 
     @Test
     public void shouldReturnListWhenJournalComptableIsAsked() {
         when(daoProxy.getComptabiliteDao()).thenReturn(comptabiliteDao);
-        when(comptabiliteDao.getListCompteComptable()).thenReturn(new ArrayList<>());
-        assertDoesNotThrow(() -> comptabiliteManager.getListCompteComptable());
+        when(comptabiliteDao.getListJournalComptable()).thenReturn(new ArrayList<>());
+        assertDoesNotThrow(() -> comptabiliteManager.getListJournalComptable());
     }
+
+
 
 
     /**
