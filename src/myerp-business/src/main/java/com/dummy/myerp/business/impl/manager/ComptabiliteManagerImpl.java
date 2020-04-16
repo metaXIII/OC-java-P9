@@ -96,7 +96,6 @@ public class ComptabiliteManagerImpl extends AbstractBusinessManager implements 
     /**
      * {@inheritDoc}
      */
-    // TODO à tester
     @Override
     public void checkEcritureComptable(EcritureComptable pEcritureComptable) throws FunctionalException {
         this.checkEcritureComptableUnit(pEcritureComptable);
@@ -111,7 +110,6 @@ public class ComptabiliteManagerImpl extends AbstractBusinessManager implements 
      * @param pEcritureComptable -
      * @throws FunctionalException Si l'Ecriture comptable ne respecte pas les règles de gestion
      */
-    //todo
     protected void checkEcritureComptableUnit(EcritureComptable pEcritureComptable) throws FunctionalException {
         // ===== Vérification des contraintes unitaires sur les attributs de l'écriture
         Set<ConstraintViolation<EcritureComptable>> vViolations = getConstraintValidator().validate(pEcritureComptable);
@@ -130,6 +128,7 @@ public class ComptabiliteManagerImpl extends AbstractBusinessManager implements 
         // ===== RG_Compta_3 : une écriture comptable doit avoir au moins 2 lignes d'écriture (1 au débit, 1 au crédit)
         int vNbrCredit = 0;
         int vNbrDebit  = 0;
+        //fixme
         for (LigneEcritureComptable vLigneEcritureComptable : pEcritureComptable.getListLigneEcriture()) {
             if (BigDecimal.ZERO.compareTo(ObjectUtils.defaultIfNull(vLigneEcritureComptable.getCredit(),
                                                                     BigDecimal.ZERO)) != 0) {
@@ -207,6 +206,8 @@ public class ComptabiliteManagerImpl extends AbstractBusinessManager implements 
      */
     @Override
     public void updateEcritureComptable(EcritureComptable pEcritureComptable) throws FunctionalException {
+        //fixme
+        this.checkEcritureComptable(pEcritureComptable);
         TransactionStatus vTS = getTransactionManager().beginTransactionMyERP();
         try {
             getDaoProxy().getComptabiliteDao().updateEcritureComptable(pEcritureComptable);

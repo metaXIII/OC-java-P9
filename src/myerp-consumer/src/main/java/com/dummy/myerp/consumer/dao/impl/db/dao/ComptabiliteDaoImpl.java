@@ -121,7 +121,8 @@ public class ComptabiliteDaoImpl extends AbstractDbConsumer implements Comptabil
 
     @Override
     public List<JournalComptable> getListJournalComptable() {
-        vJdbcTemplate = new JdbcTemplate(this.getDataSource(DataSourcesEnum.MYERP));
+        if (vJdbcTemplate == null)
+            vJdbcTemplate = new JdbcTemplate(this.getDataSource(DataSourcesEnum.MYERP));
         JournalComptableRM     vRM   = new JournalComptableRM();
         List<JournalComptable> vList = vJdbcTemplate.query(SQLgetListJournalComptable, vRM);
         return vList;

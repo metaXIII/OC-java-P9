@@ -24,6 +24,7 @@ public class EcritureComptable {
     /** Journal comptable */
     @NotNull private JournalComptable journal;
     /** The Reference. */
+    //fixme
     @Pattern(regexp = "\\w{1,5}-\\d{4}/\\d{5}")
     private String reference;
     /** The Date. */
@@ -109,6 +110,7 @@ public class EcritureComptable {
      * Renvoie si l'écriture est équilibrée (TotalDebit = TotalCrédit)
      * @return boolean
      */
+    //fixme
     public boolean isEquilibree() {
         return this.getTotalDebit().compareTo(getTotalCredit()) == 0;
     }
