@@ -1,10 +1,16 @@
 package com.dummy.myerp.consumer.dao.impl.db.dao;
 
 import com.dummy.myerp.consumer.dao.contrat.ComptabiliteDao;
-import com.dummy.myerp.consumer.dao.impl.db.rowmapper.comptabilite.*;
+import com.dummy.myerp.consumer.dao.impl.db.rowmapper.comptabilite.CompteComptableRM;
+import com.dummy.myerp.consumer.dao.impl.db.rowmapper.comptabilite.EcritureComptableRM;
+import com.dummy.myerp.consumer.dao.impl.db.rowmapper.comptabilite.JournalComptableRM;
+import com.dummy.myerp.consumer.dao.impl.db.rowmapper.comptabilite.LigneEcritureComptableRM;
 import com.dummy.myerp.consumer.db.AbstractDbConsumer;
 import com.dummy.myerp.consumer.db.DataSourcesEnum;
-import com.dummy.myerp.model.bean.comptabilite.*;
+import com.dummy.myerp.model.bean.comptabilite.CompteComptable;
+import com.dummy.myerp.model.bean.comptabilite.EcritureComptable;
+import com.dummy.myerp.model.bean.comptabilite.JournalComptable;
+import com.dummy.myerp.model.bean.comptabilite.LigneEcritureComptable;
 import com.dummy.myerp.technical.exception.NotFoundException;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -74,6 +80,9 @@ public class ComptabiliteDaoImpl extends AbstractDbConsumer implements Comptabil
      * SQLdeleteListLigneEcritureComptable
      */
     private static String SQLdeleteListLigneEcritureComptable;
+
+    private JdbcTemplate vJdbcTemplate;
+
     /**
      * Constructeur.
      */
@@ -99,9 +108,10 @@ public class ComptabiliteDaoImpl extends AbstractDbConsumer implements Comptabil
 
     @Override
     public List<CompteComptable> getListCompteComptable() {
-        JdbcTemplate          vJdbcTemplate = new JdbcTemplate(this.getDataSource(DataSourcesEnum.MYERP));
-        CompteComptableRM     vRM           = new CompteComptableRM();
-        List<CompteComptable> vList         = vJdbcTemplate.query(SQLgetListCompteComptable, vRM);
+        if (vJdbcTemplate == null)
+            vJdbcTemplate = new JdbcTemplate(this.getDataSource(DataSourcesEnum.MYERP));
+        CompteComptableRM     vRM   = new CompteComptableRM();
+        List<CompteComptable> vList = vJdbcTemplate.query(SQLgetListCompteComptable, vRM);
         return vList;
     }
 
@@ -111,9 +121,9 @@ public class ComptabiliteDaoImpl extends AbstractDbConsumer implements Comptabil
 
     @Override
     public List<JournalComptable> getListJournalComptable() {
-        JdbcTemplate           vJdbcTemplate = new JdbcTemplate(this.getDataSource(DataSourcesEnum.MYERP));
-        JournalComptableRM     vRM           = new JournalComptableRM();
-        List<JournalComptable> vList         = vJdbcTemplate.query(SQLgetListJournalComptable, vRM);
+        vJdbcTemplate = new JdbcTemplate(this.getDataSource(DataSourcesEnum.MYERP));
+        JournalComptableRM     vRM   = new JournalComptableRM();
+        List<JournalComptable> vList = vJdbcTemplate.query(SQLgetListJournalComptable, vRM);
         return vList;
     }
 
@@ -123,9 +133,9 @@ public class ComptabiliteDaoImpl extends AbstractDbConsumer implements Comptabil
 
     @Override
     public List<EcritureComptable> getListEcritureComptable() {
-        JdbcTemplate            vJdbcTemplate = new JdbcTemplate(this.getDataSource(DataSourcesEnum.MYERP));
-        EcritureComptableRM     vRM           = new EcritureComptableRM();
-        List<EcritureComptable> vList         = vJdbcTemplate.query(SQLgetListEcritureComptable, vRM);
+        vJdbcTemplate = new JdbcTemplate(this.getDataSource(DataSourcesEnum.MYERP));
+        EcritureComptableRM     vRM   = new EcritureComptableRM();
+        List<EcritureComptable> vList = vJdbcTemplate.query(SQLgetListEcritureComptable, vRM);
         return vList;
     }
 

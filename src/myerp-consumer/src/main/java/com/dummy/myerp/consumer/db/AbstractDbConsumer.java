@@ -61,6 +61,9 @@ public abstract class AbstractDbConsumer {
         return vRetour;
     }
 
+    public static void setMapDataSource(Map<DataSourcesEnum, DataSource> mapDataSource) {
+        AbstractDbConsumer.mapDataSource = mapDataSource;
+    }
 
     /**
      * Renvoie le dernière valeur utilisé d'une séquence
