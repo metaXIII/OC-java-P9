@@ -335,7 +335,7 @@ public class ComptabiliteManagerImplTest {
     }
 
     @Test
-    public void shouldUpdateEcritureComptable() {
+    public void shouldUpdateEcritureComptable() throws NotFoundException {
         ecritureComptable.setId(1);
         ecritureComptable.setDate(new Date());
         ecritureComptable.setJournal(new JournalComptable("AZ", "aze"));
@@ -348,6 +348,7 @@ public class ComptabiliteManagerImplTest {
                                                                                 null, null,
                                                                                 new BigDecimal(123)));
         when(daoProxy.getComptabiliteDao()).thenReturn(comptabiliteDao);
+        when(comptabiliteDao.getEcritureComptableByRef(any())).thenReturn(ecritureComptable);
         assertDoesNotThrow(() -> comptabiliteManager.updateEcritureComptable(ecritureComptable));
     }
 
