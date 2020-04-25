@@ -80,7 +80,7 @@ public class ComptabiliteDaoImplTest {
     }
 
     @Test
-    void shouldReturnAnEcritureComptableWhenAsked() throws NotFoundException {
+    void shouldReturnAnEcritureComptableWhenAskedById() throws NotFoundException {
         ReflectionTestUtils.setField(comptabiliteDao, "SQLgetEcritureComptable", request);
         when(namedParameterJdbcTemplate.queryForObject(anyString(), any(MapSqlParameterSource.class),
                                                        any(EcritureComptableRM.class))).thenReturn(mockEcritureComptable());
@@ -88,7 +88,7 @@ public class ComptabiliteDaoImplTest {
     }
 
     @Test
-    void shouldReturnAnNotFoundExceptionWhenEcritureComptableIsAsked() {
+    void shouldReturnAnNotFoundExceptionWhenEcritureComptableIsAskedById() {
         ReflectionTestUtils.setField(comptabiliteDao, "SQLgetEcritureComptable", request);
         when(namedParameterJdbcTemplate.queryForObject(anyString(), any(MapSqlParameterSource.class),
                                                        any(EcritureComptableRM.class))).thenThrow(EmptyResultDataAccessException.class);
