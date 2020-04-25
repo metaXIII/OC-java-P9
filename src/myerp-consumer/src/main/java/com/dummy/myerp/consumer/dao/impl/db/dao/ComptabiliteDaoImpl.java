@@ -83,6 +83,8 @@ public class ComptabiliteDaoImpl extends AbstractDbConsumer implements Comptabil
 
     private JdbcTemplate vJdbcTemplate;
 
+    private NamedParameterJdbcTemplate namedParameterJdbcTemplate;
+
     /**
      * Constructeur.
      */
@@ -134,7 +136,8 @@ public class ComptabiliteDaoImpl extends AbstractDbConsumer implements Comptabil
 
     @Override
     public List<EcritureComptable> getListEcritureComptable() {
-        vJdbcTemplate = new JdbcTemplate(this.getDataSource(DataSourcesEnum.MYERP));
+        if (vJdbcTemplate == null)
+            vJdbcTemplate = new JdbcTemplate(this.getDataSource(DataSourcesEnum.MYERP));
         EcritureComptableRM     vRM   = new EcritureComptableRM();
         List<EcritureComptable> vList = vJdbcTemplate.query(SQLgetListEcritureComptable, vRM);
         return vList;
@@ -146,12 +149,13 @@ public class ComptabiliteDaoImpl extends AbstractDbConsumer implements Comptabil
 
     @Override
     public EcritureComptable getEcritureComptable(Integer pId) throws NotFoundException {
-        NamedParameterJdbcTemplate vJdbcTemplate = new NamedParameterJdbcTemplate(getDataSource(DataSourcesEnum.MYERP));
-        MapSqlParameterSource      vSqlParams    = new MapSqlParameterSource();
+        if (namedParameterJdbcTemplate == null)
+            namedParameterJdbcTemplate = new NamedParameterJdbcTemplate(getDataSource(DataSourcesEnum.MYERP));
+        MapSqlParameterSource vSqlParams = new MapSqlParameterSource();
         vSqlParams.addValue("id", pId);
         EcritureComptableRM vRM = new EcritureComptableRM();
         try {
-            return vJdbcTemplate.queryForObject(SQLgetEcritureComptable, vSqlParams, vRM);
+            return namedParameterJdbcTemplate.queryForObject(SQLgetEcritureComptable, vSqlParams, vRM);
         } catch (EmptyResultDataAccessException vEx) {
             throw new NotFoundException("EcritureComptable non trouvée : id=" + pId);
         }
