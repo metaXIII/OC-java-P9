@@ -172,7 +172,7 @@ public class ComptabiliteDaoImpl extends AbstractDbConsumer implements Comptabil
     public EcritureComptable getEcritureComptableByRef(String pReference) throws NotFoundException {
         if (namedParameterJdbcTemplate == null)
             namedParameterJdbcTemplate = new NamedParameterJdbcTemplate(getDataSource(DataSourcesEnum.MYERP));
-        MapSqlParameterSource      vSqlParams    = new MapSqlParameterSource();
+        MapSqlParameterSource vSqlParams = new MapSqlParameterSource();
         vSqlParams.addValue("reference", pReference);
         EcritureComptableRM vRM = new EcritureComptableRM();
         EcritureComptable   vBean;
@@ -190,11 +190,13 @@ public class ComptabiliteDaoImpl extends AbstractDbConsumer implements Comptabil
 
     @Override
     public void loadListLigneEcriture(EcritureComptable pEcritureComptable) {
-        NamedParameterJdbcTemplate vJdbcTemplate = new NamedParameterJdbcTemplate(getDataSource(DataSourcesEnum.MYERP));
-        MapSqlParameterSource      vSqlParams    = new MapSqlParameterSource();
+        if (namedParameterJdbcTemplate == null)
+            namedParameterJdbcTemplate = new NamedParameterJdbcTemplate(getDataSource(DataSourcesEnum.MYERP));
+        MapSqlParameterSource vSqlParams = new MapSqlParameterSource();
         vSqlParams.addValue("ecriture_id", pEcritureComptable.getId());
         LigneEcritureComptableRM     vRM   = new LigneEcritureComptableRM();
-        List<LigneEcritureComptable> vList = vJdbcTemplate.query(SQLloadListLigneEcriture, vSqlParams, vRM);
+        List<LigneEcritureComptable> vList = namedParameterJdbcTemplate.query(SQLloadListLigneEcriture, vSqlParams,
+                                                                              vRM);
         pEcritureComptable.getListLigneEcriture().clear();
         pEcritureComptable.getListLigneEcriture().addAll(vList);
     }

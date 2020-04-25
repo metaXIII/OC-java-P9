@@ -95,6 +95,22 @@ public class ComptabiliteDaoImplTest {
         assertThrows(NotFoundException.class, () -> comptabiliteDao.getEcritureComptable(1));
     }
 
+    @Test
+    void shouldReturnAnEcritureComptableWhenAskedByRef() throws NotFoundException {
+        ReflectionTestUtils.setField(comptabiliteDao, "SQLgetEcritureComptableByRef", request);
+        when(namedParameterJdbcTemplate.queryForObject(anyString(), any(MapSqlParameterSource.class),
+                                                       any(EcritureComptableRM.class))).thenReturn(mockEcritureComptable());
+        assertEquals(0, comptabiliteDao.getEcritureComptableByRef("aze").getId());
+    }
+
+    @Test
+    void shouldReturnAnNotFoundExceptionWhenEcritureComptableIsAskedByRef() {
+        ReflectionTestUtils.setField(comptabiliteDao, "SQLgetEcritureComptableByRef", request);
+        when(namedParameterJdbcTemplate.queryForObject(anyString(), any(MapSqlParameterSource.class),
+                                                       any(EcritureComptableRM.class))).thenThrow(EmptyResultDataAccessException.class);
+        assertThrows(NotFoundException.class, () -> comptabiliteDao.getEcritureComptableByRef("aze"));
+    }
+
 
     @Test
     public void shouldSetListEcritureCompatbleWhenSetterIsAsked() {
