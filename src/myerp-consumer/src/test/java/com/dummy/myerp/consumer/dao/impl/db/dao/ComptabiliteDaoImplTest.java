@@ -36,8 +36,8 @@ import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
 public class ComptabiliteDaoImplTest {
-    @InjectMocks
     @Spy
+    @InjectMocks
     private ComptabiliteDaoImpl comptabiliteDao;
 
     @Mock
@@ -123,6 +123,16 @@ public class ComptabiliteDaoImplTest {
     @Test
     public void shouldInsertEcritureComptable() {
         comptabiliteDao.insertEcritureComptable(mockEcritureComptable());
+    }
+
+    @Test
+    public void shouldUpdateEcritureComptable() {
+        comptabiliteDao.updateEcritureComptable(mockEcritureComptable());
+    }
+
+    @Test
+    public void shouldDeleteEcritureComptable() {
+        comptabiliteDao.deleteEcritureComptable(1);
     }
 
 
