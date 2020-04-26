@@ -16,12 +16,16 @@ import com.dummy.myerp.consumer.dao.contrat.DaoProxy;
  */
 public abstract class AbstractDbConsumer {
 
-// ==================== Attributs Static ====================
-    /** Logger Log4j pour la classe */
+    // ==================== Attributs Static ====================
+    /**
+     * Logger Log4j pour la classe
+     */
     private static final Logger LOGGER = LogManager.getLogger(AbstractDbConsumer.class);
 
 
-    /** Map des DataSources */
+    /**
+     * Map des DataSources
+     */
     private static Map<DataSourcesEnum, DataSource> mapDataSource;
 
 
@@ -36,6 +40,7 @@ public abstract class AbstractDbConsumer {
 
 
     // ==================== Getters/Setters ====================
+
     /**
      * Renvoie une {@link DaoProxy}
      *
@@ -45,8 +50,11 @@ public abstract class AbstractDbConsumer {
         return ConsumerHelper.getDaoProxy();
     }
 
+    private JdbcTemplate vJdbcTemplate;
+
 
     // ==================== Méthodes ====================
+
     /**
      * Renvoie le {@link DataSource} associé demandée
      *
@@ -70,24 +78,26 @@ public abstract class AbstractDbConsumer {
      *
      * <p><i><b>Attention : </b>Méthode spécifique au SGBD PostgreSQL</i></p>
      *
-     * @param <T> : La classe de la valeur de la séquence.
+     * @param <T>            : La classe de la valeur de la séquence.
      * @param pDataSourcesId : L'identifiant de la {@link DataSource} à utiliser
-     * @param pSeqName : Le nom de la séquence dont on veut récupérer la valeur
+     * @param pSeqName       : Le nom de la séquence dont on veut récupérer la valeur
      * @param pSeqValueClass : Classe de la valeur de la séquence
      * @return la dernière valeur de la séquence
      */
-    protected <T> T queryGetSequenceValuePostgreSQL(DataSourcesEnum pDataSourcesId,
-                                                    String pSeqName, Class<T> pSeqValueClass) {
+    public <T> T queryGetSequenceValuePostgreSQL(DataSourcesEnum pDataSourcesId,
+                                                 String pSeqName, Class<T> pSeqValueClass) {
 
-        JdbcTemplate vJdbcTemplate = new JdbcTemplate(getDataSource(pDataSourcesId));
-        String vSeqSQL = "SELECT last_value FROM " + pSeqName;
-        T vSeqValue = vJdbcTemplate.queryForObject(vSeqSQL, pSeqValueClass);
+        if (vJdbcTemplate == null)
+            vJdbcTemplate = new JdbcTemplate(getDataSource(pDataSourcesId));
+        String vSeqSQL   = "SELECT last_value FROM " + pSeqName;
+        T      vSeqValue = vJdbcTemplate.queryForObject(vSeqSQL, pSeqValueClass);
 
         return vSeqValue;
     }
 
 
     // ==================== Méthodes Static ====================
+
     /**
      * Méthode de configuration de la classe
      *
@@ -97,7 +107,7 @@ public abstract class AbstractDbConsumer {
         // On pilote l'ajout avec l'Enum et on ne rajoute pas tout à l'aveuglette...
         //   ( pas de AbstractDbDao.mapDataSource.putAll(...) )
         Map<DataSourcesEnum, DataSource> vMapDataSource = new HashMap<>(DataSourcesEnum.values().length);
-        DataSourcesEnum[] vDataSourceIds = DataSourcesEnum.values();
+        DataSourcesEnum[]                vDataSourceIds = DataSourcesEnum.values();
         for (DataSourcesEnum vDataSourceId : vDataSourceIds) {
             DataSource vDataSource = pMapDataSource.get(vDataSourceId);
             // On test si la DataSource est configurée

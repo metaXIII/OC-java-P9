@@ -8,6 +8,7 @@ import com.dummy.myerp.consumer.db.DataSourcesEnum;
 import com.dummy.myerp.model.bean.comptabilite.CompteComptable;
 import com.dummy.myerp.model.bean.comptabilite.EcritureComptable;
 import com.dummy.myerp.model.bean.comptabilite.JournalComptable;
+import com.dummy.myerp.model.bean.comptabilite.LigneEcritureComptable;
 import com.dummy.myerp.technical.exception.NotFoundException;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -15,6 +16,7 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
+import org.mockito.Spy;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -30,11 +32,12 @@ import java.util.Map;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyString;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
 public class ComptabiliteDaoImplTest {
     @InjectMocks
+    @Spy
     private ComptabiliteDaoImpl comptabiliteDao;
 
     @Mock
@@ -51,7 +54,6 @@ public class ComptabiliteDaoImplTest {
     @BeforeEach
     public void init() {
         AbstractDbConsumer.setMapDataSource(mapDataSource);
-        ReflectionTestUtils.setField(comptabiliteDao, "vJdbcTemplate", jdbcTemplate);
     }
 
     @AfterEach
@@ -111,6 +113,18 @@ public class ComptabiliteDaoImplTest {
         assertThrows(NotFoundException.class, () -> comptabiliteDao.getEcritureComptableByRef("aze"));
     }
 
+    @Test
+    public void shouldLoadListLigneEcriture() {
+        ReflectionTestUtils.setField(comptabiliteDao, "SQLloadListLigneEcriture", request);
+        comptabiliteDao.loadListLigneEcriture(new EcritureComptable());
+        verify(comptabiliteDao, times(1)).loadListLigneEcriture(any());
+    }
+
+    @Test
+    public void shouldInsertEcritureComptable() {
+        comptabiliteDao.insertEcritureComptable(mockEcritureComptable());
+    }
+
 
     @Test
     public void shouldSetListEcritureCompatbleWhenSetterIsAsked() {
@@ -130,6 +144,27 @@ public class ComptabiliteDaoImplTest {
     private EcritureComptable mockEcritureComptable() {
         EcritureComptable ecritureComptable = new EcritureComptable();
         ecritureComptable.setId(0);
+        ecritureComptable.setJournal(mockJournalComptable());
+        ecritureComptable.getListLigneEcriture().add(mockLigneEcritureComptable());
+        ecritureComptable.getListLigneEcriture().add(mockLigneEcritureComptable());
         return ecritureComptable;
+    }
+
+    private JournalComptable mockJournalComptable() {
+        JournalComptable journalComptable = new JournalComptable();
+        journalComptable.setCode("codeJournal");
+        return journalComptable;
+    }
+
+    private LigneEcritureComptable mockLigneEcritureComptable() {
+        LigneEcritureComptable ligneEcritureComptable = new LigneEcritureComptable();
+        ligneEcritureComptable.setCompteComptable(mocCompteComptable());
+        return ligneEcritureComptable;
+    }
+
+    private CompteComptable mocCompteComptable() {
+        CompteComptable compteComptable = new CompteComptable();
+        compteComptable.setNumero(1);
+        return compteComptable;
     }
 }

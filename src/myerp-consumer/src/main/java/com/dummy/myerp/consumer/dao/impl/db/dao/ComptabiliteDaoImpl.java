@@ -194,7 +194,7 @@ public class ComptabiliteDaoImpl extends AbstractDbConsumer implements Comptabil
             namedParameterJdbcTemplate = new NamedParameterJdbcTemplate(getDataSource(DataSourcesEnum.MYERP));
         MapSqlParameterSource vSqlParams = new MapSqlParameterSource();
         vSqlParams.addValue("ecriture_id", pEcritureComptable.getId());
-        LigneEcritureComptableRM     vRM   = new LigneEcritureComptableRM();
+        LigneEcritureComptableRM vRM = new LigneEcritureComptableRM();
         List<LigneEcritureComptable> vList = namedParameterJdbcTemplate.query(SQLloadListLigneEcriture, vSqlParams,
                                                                               vRM);
         pEcritureComptable.getListLigneEcriture().clear();
@@ -211,8 +211,9 @@ public class ComptabiliteDaoImpl extends AbstractDbConsumer implements Comptabil
     @Override
     public void insertEcritureComptable(EcritureComptable pEcritureComptable) {
         // ===== Ecriture Comptable
-        NamedParameterJdbcTemplate vJdbcTemplate = new NamedParameterJdbcTemplate(getDataSource(DataSourcesEnum.MYERP));
-        MapSqlParameterSource      vSqlParams    = new MapSqlParameterSource();
+        if (namedParameterJdbcTemplate == null)
+            namedParameterJdbcTemplate = new NamedParameterJdbcTemplate(getDataSource(DataSourcesEnum.MYERP));
+        MapSqlParameterSource vSqlParams = new MapSqlParameterSource();
         vSqlParams.addValue("journal_code", pEcritureComptable.getJournal().getCode());
         vSqlParams.addValue("reference", pEcritureComptable.getReference());
         vSqlParams.addValue("date", pEcritureComptable.getDate(), Types.DATE);
@@ -239,8 +240,9 @@ public class ComptabiliteDaoImpl extends AbstractDbConsumer implements Comptabil
      * @param pEcritureComptable l'écriture comptable
      */
     protected void insertListLigneEcritureComptable(EcritureComptable pEcritureComptable) {
-        NamedParameterJdbcTemplate vJdbcTemplate = new NamedParameterJdbcTemplate(getDataSource(DataSourcesEnum.MYERP));
-        MapSqlParameterSource      vSqlParams    = new MapSqlParameterSource();
+        if (namedParameterJdbcTemplate == null)
+            namedParameterJdbcTemplate = new NamedParameterJdbcTemplate(getDataSource(DataSourcesEnum.MYERP));
+        MapSqlParameterSource vSqlParams = new MapSqlParameterSource();
         vSqlParams.addValue("ecriture_id", pEcritureComptable.getId());
 
         int vLigneId = 0;
