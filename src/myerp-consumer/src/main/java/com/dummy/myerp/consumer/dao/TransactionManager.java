@@ -1,4 +1,4 @@
-package com.dummy.myerp.business.impl;
+package com.dummy.myerp.consumer.dao;
 
 import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.TransactionDefinition;

@@ -6,6 +6,7 @@ import javax.validation.Validator;
 import javax.validation.ValidatorFactory;
 
 import com.dummy.myerp.business.contrat.BusinessProxy;
+import com.dummy.myerp.consumer.dao.TransactionManager;
 import com.dummy.myerp.consumer.dao.contrat.DaoProxy;
 
 
