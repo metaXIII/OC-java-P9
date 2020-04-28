@@ -1,9 +1,9 @@
 package com.dummy.myerp.model.bean.comptabilite;
 
-import java.util.List;
-import java.util.Objects;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+import java.util.List;
+import java.util.Objects;
 
 
 /**
@@ -12,18 +12,23 @@ import javax.validation.constraints.Size;
 public class JournalComptable {
 
     // ==================== Attributs ====================
-    /** code */
+    /**
+     * code
+     */
     @NotNull
     @Size(min = 1, max = 5)
     private String code;
 
-    /** libelle */
+    /**
+     * libelle
+     */
     @NotNull
     @Size(min = 1, max = 150)
     private String libelle;
 
 
     // ==================== Constructeurs ====================
+
     /**
      * Instantiates a new Journal comptable.
      */
@@ -33,7 +38,7 @@ public class JournalComptable {
     /**
      * Instantiates a new Journal comptable.
      *
-     * @param pCode the p code
+     * @param pCode    the p code
      * @param pLibelle the p libelle
      */
     public JournalComptable(String pCode, String pLibelle) {
@@ -46,12 +51,15 @@ public class JournalComptable {
     public String getCode() {
         return code;
     }
+
     public void setCode(String pCode) {
         code = pCode;
     }
+
     public String getLibelle() {
         return libelle;
     }
+
     public void setLibelle(String pLibelle) {
         libelle = pLibelle;
     }
@@ -61,16 +69,17 @@ public class JournalComptable {
     @Override
     public String toString() {
         final StringBuilder vStB = new StringBuilder(this.getClass().getSimpleName());
-        final String vSEP = ", ";
+        final String        vSEP = ", ";
         vStB.append("{")
-            .append("code='").append(code).append('\'')
-            .append(vSEP).append("libelle='").append(libelle).append('\'')
-            .append("}");
+                .append("code='").append(code).append('\'')
+                .append(vSEP).append("libelle='").append(libelle).append('\'')
+                .append("}");
         return vStB.toString();
     }
 
 
     // ==================== Méthodes STATIC ====================
+
     /**
      * Renvoie le {@link JournalComptable} de code {@code pCode} s'il est présent dans la liste
      *
