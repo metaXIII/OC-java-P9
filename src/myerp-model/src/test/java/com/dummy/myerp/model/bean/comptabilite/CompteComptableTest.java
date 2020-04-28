@@ -1,6 +1,7 @@
 package com.dummy.myerp.model.bean.comptabilite;
 
-import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
@@ -12,11 +13,16 @@ import static org.mockito.ArgumentMatchers.any;
 
 class CompteComptableTest {
 
-    private static CompteComptable compteComptable;
+    private CompteComptable compteComptable;
 
-    @BeforeAll
-    public static void initCompteComptable() {
+    @BeforeEach
+    public void initCompteComptable() {
         compteComptable = new CompteComptable();
+    }
+
+    @AfterEach
+    public void end() {
+        compteComptable = null;
     }
 
     @Test
