@@ -56,19 +56,19 @@
             </value>
         </property>
         <property name="SQLinsertListLigneEcritureComptable">
+            <!--            fixme-->
             <value>
                 INSERT INTO myerp.ligne_ecriture_comptable (
-                ecriture_id, ligne_id, compte_comptable_numero, libelle, debit,
-                credit
+                ecriture_id, ligne_id, compte_comptable_numero, libelle, debit, credit
                 ) VALUES (
-                :ecriture_id, :ligne_id, :compte_comptable_numero, :libelle, :debit,
-                :credit
+                :ecriture_id, :ligne_id, :compte_comptable_numero, :libelle, :debit, :credit
                 )
             </value>
         </property>
         <property name="SQLupdateEcritureComptable">
             <value>
-                UPDATE myerp.ecriture_comptable SET
+                UPDATE myerp.ecriture_comptable
+                SET
                 journal_code = :journal_code,
                 reference = :reference,
                 date = :date,
