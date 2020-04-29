@@ -11,7 +11,6 @@ import com.dummy.myerp.model.bean.comptabilite.JournalComptable;
 import com.dummy.myerp.model.bean.comptabilite.LigneEcritureComptable;
 import com.dummy.myerp.technical.exception.FunctionalException;
 import com.dummy.myerp.technical.exception.NotFoundException;
-import lombok.extern.slf4j.Slf4j;
 import org.junit.Assert;
 import org.junit.ComparisonFailure;
 import org.junit.jupiter.api.AfterEach;
@@ -33,7 +32,6 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
 
 
-@Slf4j
 @ExtendWith(MockitoExtension.class)
 public class ComptabiliteManagerImplTest {
 
@@ -55,7 +53,6 @@ public class ComptabiliteManagerImplTest {
 
     @BeforeEach
     public void initTest() {
-        log.info("Début du test");
         ecritureComptable = new EcritureComptable();
         AbstractBusinessManager.configure(businessProxy,
                                           daoProxy,

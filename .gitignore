@@ -1,5 +1,7 @@
 /target
 /*-*/target
+/*-*/target/**
+./myerp-business/target/*
 
 /.settings
 /.project

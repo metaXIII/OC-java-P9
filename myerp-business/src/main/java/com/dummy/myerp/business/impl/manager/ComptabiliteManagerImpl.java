@@ -8,7 +8,6 @@ import com.dummy.myerp.model.bean.comptabilite.JournalComptable;
 import com.dummy.myerp.model.bean.comptabilite.LigneEcritureComptable;
 import com.dummy.myerp.technical.exception.FunctionalException;
 import com.dummy.myerp.technical.exception.NotFoundException;
-import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.ObjectUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.transaction.TransactionStatus;
@@ -25,7 +24,6 @@ import java.util.Set;
 /**
  * Comptabilite manager implementation.
  */
-@Slf4j
 public class ComptabiliteManagerImpl extends AbstractBusinessManager implements ComptabiliteManager {
     public ComptabiliteManagerImpl() {
     }
