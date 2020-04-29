@@ -1,0 +1,51 @@
+
+Y
+java:S2696„"6Make the enclosing method "static" or remove this set.(ÖÎÚ™ıÿÿÿÿ8ÒÎ¢ê™.
+T
+java:S2696„"6Make the enclosing method "static" or remove this set.(ÀËğª8ÒÎ¢ê™.
+
+java:S3008D"nRename this field "SQLinsertListLigneEcritureComptable" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(Ş¹³­ùÿÿÿÿ8Ì£å™˜.
+Y
+java:S2696›"6Make the enclosing method "static" or remove this set.(ûäèÀøÿÿÿÿ8ÒÎ¢ê™.
+‚
+java:S3008@"eRename this field "SQLinsertEcritureComptable" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(éÈï8Ì£å™˜.
+T
+java:S2696¬"6Make the enclosing method "static" or remove this set.(ÿ­ñ÷8ÒÎ¢ê™.
+‚
+java:S3008N"eRename this field "SQLdeleteEcritureComptable" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(ü¤Š÷8Ì£å™˜.
+
+java:S3008%"dRename this field "SQLgetListCompteComptable" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(’”8Ì£å™˜.
+‹
+java:S3008R"nRename this field "SQLdeleteListLigneEcritureComptable" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(Å˜û¡8Ì£å™˜.
+
+java:S3008<"cRename this field "SQLloadListLigneEcriture" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(†ô$8Ì£å™˜.
+S
+java:S2696x"6Make the enclosing method "static" or remove this set.(ø¦¹¼8ÒÎ¢ê™.
+‰
+java:S30088"gRename this field "SQLgetEcritureComptableByRef" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(¢Ü÷ûÿÿÿÿ8Ì£å™˜.
+X
+java:S2696i"6Make the enclosing method "static" or remove this set.(ÿÈïßüÿÿÿÿ8ÒÎ¢ê™.
+j
+java:S1192Á"LDefine a constant instead of duplicating this literal "ecriture_id" 3 times.(š¿°‘8Ì£å™˜.
+„
+java:S30084"bRename this field "SQLgetEcritureComptable" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(èı‹Ùûÿÿÿÿ8Ì£å™˜.
+Y
+java:S2696¹"6Make the enclosing method "static" or remove this set.(«Š¥Æøÿÿÿÿ8ÒÎ¢ê™.
+f
+java:S1192Ù"HDefine a constant instead of duplicating this literal "libelle" 3 times.(ŠÔó8Ì£å™˜.
+T
+java:S2696ç"6Make the enclosing method "static" or remove this set.(û¡¥ø8ÒÎ¢ê™.
+‡
+java:S3008)"eRename this field "SQLgetListJournalComptable" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(…š³¼ÿÿÿÿÿ8Ì£å™˜.
+‚
+java:S3008J"eRename this field "SQLupdateEcritureComptable" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(°ÃĞ8Ì£å™˜.
+g
+java:S1192­"JDefine a constant instead of duplicating this literal "reference" 3 times.(¤ßs8Ì£å™˜.
+T
+java:S2696"6Make the enclosing method "static" or remove this set.(›§ÖÄ8ÒÎ¢ê™.
+ƒ
+java:S30080"fRename this field "SQLgetListEcritureComptable" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(øıÒ8Ì£å™˜.
+Y
+java:S2696¢"6Make the enclosing method "static" or remove this set.(ùÔ”¨şÿÿÿÿ8ÒÎ¢ê™.
+T
+java:S2696Í"6Make the enclosing method "static" or remove this set.(—…¦ô8ÒÎ¢ê™.

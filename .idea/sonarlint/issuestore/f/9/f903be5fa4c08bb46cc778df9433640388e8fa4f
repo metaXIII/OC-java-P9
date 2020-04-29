@@ -1,0 +1,13 @@
+
+a
+java:S21539"FRemove the boxing to "Long"; The argument is already of the same type.(èüŠÅûÿÿÿÿ
+J
+java:S1874'"/Remove this use of "Integer"; it is deprecated.(Áê ¿ûÿÿÿÿ
+U
+java:S1610"?Convert the abstract class "ResultSetHelper" into an interface.(›¨ß‚
+G
+java:S18749",Remove this use of "Long"; it is deprecated.(èüŠÅûÿÿÿÿ
+9
+java:S21299"Remove this "Long" constructor(èüŠÅûÿÿÿÿ
+<
+java:S2129'"!Remove this "Integer" constructor(Áê ¿ûÿÿÿÿ
