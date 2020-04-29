@@ -115,8 +115,6 @@ public class ComptabiliteDaoImplTestIT {
     }
 
     private CompteComptable mocCompteComptable() {
-        CompteComptable compteComptable = new CompteComptable();
-        compteComptable.setNumero(401);
-        return compteComptable;
+        return new CompteComptable(401);
     }
 }
