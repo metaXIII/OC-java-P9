@@ -130,7 +130,7 @@
                 </plugins>
                 <testResources>
                     <testResource>
-                        <directory>src/test/resources</directory>
+                        <directory>src/test-consumer/resources</directory>
                     </testResource>
                     <testResource>
                         <directory>src/test-consumer/resources</directory>
