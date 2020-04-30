@@ -1,5 +1,5 @@
 # MyERP
-test
+
 ## Organisation du répertoire
 
 *   `doc` : documentation
