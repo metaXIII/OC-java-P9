@@ -1,13 +1,12 @@
 language: java
 jdk: oraclejdk11
-env:
-  global:
-    secure: D8VHiwx844o/DNTOOAh/0lO744nOinvXqxy1zLroFczURk2CCWSAezwDDJVMYlzCKTr+TuKqiUzQQpE8Kp+nSObxAspv+7dMATJ/iB/3UxqGE3dixlcPhvpQ3e3YTLsPOmHcaiSRoSZrQfwWXbgCqPVnKxB/UhK312i4AacmVtzZKFvap2Y4Lf75FrLWG97rT1iZNmsRAEJRN7Cjq3n2N8OZEbUWwSSpeiIapuIdSVobItUBAT4U2go6KwexyLx0PoAWK9JNtZl5JVPFlIdkRpdBmG81gV9FNWXLA1gOQAHOSpDaETf2YlXYNXC1Ak19YPmfYXDt1E7FG+Rkq5QQOZDUCrGJO76Z13XVEqzKW+33JWbTjNkQDma/dEcFQu2kExbAdiQppM7OCfuq2XJcGwxo+m/rka9s25ladsyvkNPVIwhMte6zkNFzDyDTqIoMcU44jcseYcd3y3CVXjLFOa5/W2dKKnQ/BlsJhTb+zQXF0B8Pc/pxY2cudFIny3gIcIbhUwJPj3eHaps3OBfBDs4RqfoOWRlreo1lOeZ/E+q9hDzTeVL/IEvMnEmbj12Gl9EiLZjaC8yYkT6IdINu3Lw6NwzUuP+jJAagy4rvKn09bbXbZHzd0dZ6iErzKW8BYpb+Ox41UNKFyhMXtxKVjVzqw0bXRnaKVpOmfj9y6EY=
 addons:
   sonarcloud:
     organization: metaxiii
     token:
-      secure: $SONAR_TOKEN
+      secure: "fNACCOo4WRTB8ZJzjEBndDqfCAXDBUV+TaOJkDeKRMmqveLm7J8BihvaXl0Z8z8fN77O16FYDLGINyFiXiMH/NZEWMhpyvbvdufcV25lHxFIYQlUQ/9kotLHEJmCXdbasOJgvs5Kjn8s8N7fm4FSxT2+Fdf37zDMHd83dmk8YRjyoLENGd0ExFw+kynGQRwyRZcwtz3UlndAd6RQl6Pzi55z4uroZgclqYhrdv2TqRUEruL9MG/yjxXKEIhBzr
+      /BNl9DBx4VowejSxMLJR+AWwXkI/SB55Yxl3XCDKhkWRo7aptX4V/gYp+q2+7tAFeQcpDzbRbeFrSbXYDJwbeeCGjFIV3/GKmJyn4ZE2RAXCyKEP9a5PHcsOnhsjLcctfAVtp+ar7prxRY57NLXCSiNarruwUJr+i2P/RXGnvgD/Jg6R2O6XWNh9ySq7DXhRham/yUgredlBGu5Q0Cb+fGV2HdNvdXLXozVYsE08QcvJk2V4XwTPTLBprmsDyLfwAX2CcJmGU
+      x9FfEjuzfq8Pc0baixvdPZTL7O4SknTQaAJaM2MupNiSYRkvxoGbgtn9xQRFYxGGQX2MSnvYdfqvRlZ1GWrh1Rbv8OiaG0ShapboaJtJa2JCLYeb/8CWjxNhGlmPQnnIK1/+/ltzMkgKpfXNdA9ZnmwSJE04izUknb0g="
 script:
-- mvn clean install -B
-- sonar-scanner
+  - mvn clean install -B
+  - sonar-scanner
