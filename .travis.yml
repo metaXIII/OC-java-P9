@@ -1,14 +1,13 @@
 language: java
 jdk: oraclejdk11
-sudo: required
+env:
+  global:
+    secure: D8VHiwx844o/DNTOOAh/0lO744nOinvXqxy1zLroFczURk2CCWSAezwDDJVMYlzCKTr+TuKqiUzQQpE8Kp+nSObxAspv+7dMATJ/iB/3UxqGE3dixlcPhvpQ3e3YTLsPOmHcaiSRoSZrQfwWXbgCqPVnKxB/UhK312i4AacmVtzZKFvap2Y4Lf75FrLWG97rT1iZNmsRAEJRN7Cjq3n2N8OZEbUWwSSpeiIapuIdSVobItUBAT4U2go6KwexyLx0PoAWK9JNtZl5JVPFlIdkRpdBmG81gV9FNWXLA1gOQAHOSpDaETf2YlXYNXC1Ak19YPmfYXDt1E7FG+Rkq5QQOZDUCrGJO76Z13XVEqzKW+33JWbTjNkQDma/dEcFQu2kExbAdiQppM7OCfuq2XJcGwxo+m/rka9s25ladsyvkNPVIwhMte6zkNFzDyDTqIoMcU44jcseYcd3y3CVXjLFOa5/W2dKKnQ/BlsJhTb+zQXF0B8Pc/pxY2cudFIny3gIcIbhUwJPj3eHaps3OBfBDs4RqfoOWRlreo1lOeZ/E+q9hDzTeVL/IEvMnEmbj12Gl9EiLZjaC8yYkT6IdINu3Lw6NwzUuP+jJAagy4rvKn09bbXbZHzd0dZ6iErzKW8BYpb+Ox41UNKFyhMXtxKVjVzqw0bXRnaKVpOmfj9y6EY=
 addons:
   sonarcloud:
     organization: metaxiii
     token:
       secure: $SONAR_TOKEN
 script:
-- "./mvnw clean install -B"
-- "./mvnw clean org.jacoco:jacoco-maven-plugin:prepare-agent package sonar:sonar -Dsonar.projectKey=OC-java-P9"
-env:
-  global:
-    secure: LqCC7L4VSjI7wrrE+4ryyGZKObJmdPe+DOLtFTxQp6bYmPB6I3EYLg+jL16zV8dNJl86XPsz1xXf0JaDbN4HtPzKJiSZcJ5+i3n4BEZCqA+WHsrnUL53mJs9z5Gt7+jUoj6acLtF8/KfXzUlpg1tipOjQjjygwBbSIrKGSP6veA3ZXIGn8p7nD8H9D9tvwNzdpuDexZIl58QBLDSf4nlTueMjq2dUGJgBJ7x2Kaq2lmt5erOe9tA6GYhWSUDL8vV44UKhHEue+Z4TvPSmZKB0wsb+jHSC6aYu1+S/M19+HbSedyDBLjvyDU1oTL91dMU/PZceleDnLtszcSLf70kbxwVNxk0ri40V/RQYvREVYMzLAi+Auu85WwifsPI7UyI54EG0DTcIc49wEM8kumCp7I8alTTk6VOiyTyoA77ZXQ5KC42zFkTaypIsf5qynxlW5hb3aFZsDz0JQFWAmeGzyflKsMKJ94kaT/4ZHXMBK7577i9BXB9PVdhwbIYDcUKIodiFJhwauCe4aFGzicblvamSaf26fMFKv4vQ7QdnKEzSvwQ9qiI8aSZ+iXtfBSsJE+S5TwHb+7f/tFrkyOJPNCKoBxM7izRql3SXD8PqnpXEfCRqvm6XvHyBGUGpF5Y53ta3rETiLAHz6pjw0ictNLiYLirXTM+Ck5R94jD9nQ=
+- mvn clean install -B
+- mvn clean org.jacoco:jacoco-maven-plugin:prepare-agent install sonar:sonar -Dsonar.projectKey=metaXIII_OC-java-P9
