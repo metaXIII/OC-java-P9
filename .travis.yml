@@ -6,4 +6,4 @@ addons:
     token:
       secure: $SONAR_TOKEN
 script:
-  - mvn clean verify sonar:sonar -Pcoverage -Dsonar.projectKey=MyERP
+  - mvn clean verify sonar:sonar -Pcoverage -Dsonar.projectKey=OC-java-P9
