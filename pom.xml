@@ -56,11 +56,6 @@
         <log4j.version>2.8.1</log4j.version>
         <spring.version>5.2.5.RELEASE</spring.version>
         <dependency.locations.enabled>false</dependency.locations.enabled>
-
-        <sonar.projectKey>metaXIII_OC-java-P9</sonar.projectKey>
-        <sonar.organization>metaxiii</sonar.organization>
-        <sonar.host.url>https://sonarcloud.io</sonar.host.url>
-        <sonar.login>a7e17a082e9ceeaeacbd0257b09a4c8d3ba8f37b</sonar.login>
     </properties>
 
 
