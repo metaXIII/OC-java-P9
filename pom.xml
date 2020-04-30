@@ -37,6 +37,12 @@
         </site>
     </distributionManagement>
 
+    <scm>
+        <connection>scm:git:git@github.com:metaXIII/OC-java-P9.git</connection>
+        <developerConnection>scm:git:git@github.com:metaXIII/OC-java-P9.git</developerConnection>
+        <url>https://github.com/metaXIII/OC-java-P9</url>
+    </scm>
+
 
     <!-- =============================================================== -->
     <!-- Properties -->
