@@ -146,34 +146,17 @@
             <id>test-business</id>
             <build>
                 <plugins>
-                    <!-- Ajout du répertoire src/test-business/java en tant que source de test du module -->
                     <plugin>
-                        <groupId>org.codehaus.mojo</groupId>
-                        <artifactId>build-helper-maven-plugin</artifactId>
-                        <executions>
-                            <execution>
-                                <id>add-test-source</id>
-                                <phase>generate-test-sources</phase>
-                                <goals>
-                                    <goal>add-test-source</goal>
-                                </goals>
-                                <configuration>
-                                    <sources>
-                                        <source>src/test-business/java</source>
-                                    </sources>
-                                </configuration>
-                            </execution>
-                        </executions>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-surefire-plugin</artifactId>
+                        <configuration>
+                            <includes>
+                                <include>**/*IT.java</include>
+                                <include>**/*Test.java</include>
+                            </includes>
+                        </configuration>
                     </plugin>
                 </plugins>
-                <testResources>
-                    <testResource>
-                        <directory>src/test/resources</directory>
-                    </testResource>
-                    <testResource>
-                        <directory>src/test-business/resources</directory>
-                    </testResource>
-                </testResources>
             </build>
         </profile>
     </profiles>

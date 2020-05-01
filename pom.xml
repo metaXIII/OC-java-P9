@@ -403,19 +403,12 @@
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-surefire-plugin</artifactId>
-                    <version>2.19.1</version>
-                    <dependencies>
-                        <dependency>
-                            <groupId>org.junit.platform</groupId>
-                            <artifactId>junit-platform-surefire-provider</artifactId>
-                            <version>1.1.0</version>
-                        </dependency>
-                        <dependency>
-                            <groupId>org.junit.jupiter</groupId>
-                            <artifactId>junit-jupiter-engine</artifactId>
-                            <version>5.1.0</version>
-                        </dependency>
-                    </dependencies>
+                    <version>2.22.2</version>
+                    <configuration>
+                        <includes>
+                            <include>**/*Test.java</include>
+                        </includes>
+                    </configuration>
                 </plugin>
 
                 <!-- ===== Plugin d'analyse de code Checkstyle ===== -->
@@ -496,24 +489,6 @@
                             <id>default-check</id>
                             <goals>
                                 <goal>check</goal>
-                            </goals>
-                        </execution>
-                    </executions>
-                </plugin>
-                <plugin>
-                    <groupId>org.apache.maven.plugins</groupId>
-                    <artifactId>maven-failsafe-plugin</artifactId>
-                    <configuration>
-                        <includes>
-                            <include>**/*IT.java</include>
-                        </includes>
-                    </configuration>
-                    <executions>
-                        <execution>
-                            <id>failsafe-integration-tests</id>
-                            <phase>integration-test</phase>
-                            <goals>
-                                <goal>integration-test</goal>
                             </goals>
                         </execution>
                     </executions>
