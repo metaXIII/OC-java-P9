@@ -66,10 +66,6 @@
     </properties>
 
 
-    [WARNING] No coverage report can be found with sonar.coverage.jacoco.xmlReportPaths='/home/travis/build/metaXIII/OC-java-P9
-    /target/jacoco-unit.exec'. Using default locations: target/site/jacoco/jacoco.xml,target/site/jacoco-it/jacoco.xml,build/reports/jacoco/test/jacocoTestReport.xml
-
-
     <!-- =============================================================== -->
     <!-- Modules -->
     <!-- =============================================================== -->
