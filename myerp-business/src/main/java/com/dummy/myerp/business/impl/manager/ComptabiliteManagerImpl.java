@@ -142,7 +142,6 @@ public class ComptabiliteManagerImpl extends AbstractBusinessManager implements 
             throw new FunctionalException("L'écriture comptable doit avoir au moins deux lignes : une ligne au débit " +
                                                   "et une ligne au crédit.");
         }
-        // TODO ===== RG_Compta_5 : Format et contenu de la référence
         // vérifier que l'année dans la référence correspond bien à la date de l'écriture, idem pour le code journal...
         Calendar calendar = Calendar.getInstance();
         calendar.setTime(pEcritureComptable.getDate());
