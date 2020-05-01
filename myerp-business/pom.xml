@@ -37,6 +37,7 @@
     <!-- Properties -->
     <!-- =============================================================== -->
     <properties>
+        <sonar.coverage.jacoco.xmlReportPaths>${project.basedir}/target/site/jacoco/jacoco.xml</sonar.coverage.jacoco.xmlReportPaths>
     </properties>
 
 
