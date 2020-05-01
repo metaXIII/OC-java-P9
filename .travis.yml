@@ -14,7 +14,7 @@ addons:
 before_script:
   - docker-compose -f docker/dev/docker-compose.yml up -d
 script:
-  - mvn clean package sonar:sonar -P test-consumer,test-business -Dsonar.projectKey=metaXIII_OC-java-P9
+  - mvn clean install sonar:sonar -P test-consumer,test-business -Dsonar.projectKey=metaXIII_OC-java-P9
 after_script:
   - docker-compose -f docker/dev/docker-compose.yml stop
   - docker-compose -f docker/dev/docker-compose.yml rm -f
