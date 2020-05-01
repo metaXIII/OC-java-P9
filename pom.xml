@@ -61,9 +61,8 @@
         <sonar.core.codeCoveragePlugin>jacoco</sonar.core.codeCoveragePlugin>
         <sonar.dynamicAnalysis>reuseReports</sonar.dynamicAnalysis>
         <sonar.language>java</sonar.language>
-        <sonar.junit.reportPaths>${basedir}/target/surefire-reports/</sonar.junit.reportPaths>
-        <sonar.coverage.jacoco.xmlReportPaths>${project.basedir}/target/site/jacoco-aggregate/jacoco.xml
-        </sonar.coverage.jacoco.xmlReportPaths>
+        <sonar.jacoco.reportPath>${project.basedir}/../target/jacoco.exec</sonar.jacoco.reportPath>
+        <!--        <sonar.coverage.jacoco.xmlReportPaths>${project.basedir}/target/site/jacoco-aggregate/jacoco.xml</sonar.coverage.jacoco.xmlReportPaths>-->
     </properties>
 
 
@@ -305,55 +304,24 @@
             <plugin>
                 <groupId>org.jacoco</groupId>
                 <artifactId>jacoco-maven-plugin</artifactId>
-                <version>0.8.5</version>
+                <version>0.8.2</version>
                 <executions>
                     <execution>
-                        <id>before-unit-test-execution</id>
+                        <id>merge</id>
                         <goals>
-                            <goal>prepare-agent</goal>
+                            <goal>merge</goal>
                         </goals>
                         <configuration>
-                            <destFile>${sonar.coverage.jacoco.xmlReportPaths}</destFile>
-                            <propertyName>surefire.jacoco.args</propertyName>
+                            <fileSets>
+                                <fileSet implementation="org.apache.maven.shared.model.fileset.FileSet">
+                                    <directory>${project.basedir}</directory>
+                                    <includes>
+                                        <include>**/*.exec</include>
+                                    </includes>
+                                </fileSet>
+                            </fileSets>
                         </configuration>
                     </execution>
-
-                    <execution>
-                        <id>after-unit-test-execution</id>
-                        <phase>test</phase>
-                        <goals>
-                            <goal>report</goal>
-                        </goals>
-                        <configuration>
-                            <dataFile>${sonar.coverage.jacoco.xmlReportPaths}</dataFile>
-                            <outputDirectory>${project.reporting.outputDirectory}/jacoco</outputDirectory>
-                        </configuration>
-                    </execution>
-
-                    <execution>
-                        <id>before-integration-test-execution</id>
-                        <phase>pre-integration-test</phase>
-                        <goals>
-                            <goal>prepare-agent</goal>
-                        </goals>
-                        <configuration>
-                            <destFile>${sonar.coverage.jacoco.xmlReportPaths}</destFile>
-                            <propertyName>failsafe.jacoco.args</propertyName>
-                        </configuration>
-                    </execution>
-
-                    <execution>
-                        <id>after-integration-test-execution</id>
-                        <phase>post-integration-test</phase>
-                        <goals>
-                            <goal>report</goal>
-                        </goals>
-                        <configuration>
-                            <dataFile>${sonar.jacoco.reportPath}</dataFile>
-                            <outputDirectory>${project.reporting.outputDirectory}/jacoco</outputDirectory>
-                        </configuration>
-                    </execution>
-
                 </executions>
             </plugin>
 
@@ -363,7 +331,7 @@
                 <plugin>
                     <groupId>org.jacoco</groupId>
                     <artifactId>jacoco-maven-plugin</artifactId>
-                    <version>0.8.5</version>
+                    <version>0.8.2</version>
                 </plugin>
                 <!-- ===== Java compilation ===== -->
                 <plugin>
@@ -477,44 +445,44 @@
                     <version>1.10</version>
                 </plugin>
 
-                <plugin>
-                    <groupId>org.jacoco</groupId>
-                    <artifactId>org.jacoco.agent</artifactId>
-                    <version>0.8.5</version>
-                    <executions>
-                        <execution>
-                            <id>default-prepare-agent</id>
-                            <goals>
-                                <goal>prepare-agent</goal>
-                            </goals>
-                        </execution>
-                        <execution>
-                            <id>default-prepare-agent-integration</id>
-                            <goals>
-                                <goal>prepare-agent-integration</goal>
-                            </goals>
-                        </execution>
-                        <execution>
-                            <id>default-report</id>
-                            <phase>verify</phase>
-                            <goals>
-                                <goal>report</goal>
-                            </goals>
-                        </execution>
-                        <execution>
-                            <id>default-report-integration</id>
-                            <goals>
-                                <goal>report-integration</goal>
-                            </goals>
-                        </execution>
-                        <execution>
-                            <id>default-check</id>
-                            <goals>
-                                <goal>check</goal>
-                            </goals>
-                        </execution>
-                    </executions>
-                </plugin>
+                <!--                <plugin>-->
+                <!--                    <groupId>org.jacoco</groupId>-->
+                <!--                    <artifactId>org.jacoco.agent</artifactId>-->
+                <!--                    <version>0.8.2</version>-->
+                <!--                    <executions>-->
+                <!--                        <execution>-->
+                <!--                            <id>default-prepare-agent</id>-->
+                <!--                            <goals>-->
+                <!--                                <goal>prepare-agent</goal>-->
+                <!--                            </goals>-->
+                <!--                        </execution>-->
+                <!--                        <execution>-->
+                <!--                            <id>default-prepare-agent-integration</id>-->
+                <!--                            <goals>-->
+                <!--                                <goal>prepare-agent-integration</goal>-->
+                <!--                            </goals>-->
+                <!--                        </execution>-->
+                <!--                        <execution>-->
+                <!--                            <id>default-report</id>-->
+                <!--                            <phase>verify</phase>-->
+                <!--                            <goals>-->
+                <!--                                <goal>report</goal>-->
+                <!--                            </goals>-->
+                <!--                        </execution>-->
+                <!--                        <execution>-->
+                <!--                            <id>default-report-integration</id>-->
+                <!--                            <goals>-->
+                <!--                                <goal>report-integration</goal>-->
+                <!--                            </goals>-->
+                <!--                        </execution>-->
+                <!--                        <execution>-->
+                <!--                            <id>default-check</id>-->
+                <!--                            <goals>-->
+                <!--                                <goal>check</goal>-->
+                <!--                            </goals>-->
+                <!--                        </execution>-->
+                <!--                    </executions>-->
+                <!--                </plugin>-->
             </plugins>
         </pluginManagement>
     </build>
