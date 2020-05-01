@@ -304,8 +304,8 @@
                 <groupId>org.jacoco</groupId>
                 <artifactId>jacoco-maven-plugin</artifactId>
                 <configuration>
-                    <destFile>${basedir}/target/coverage-reports/jacoco-unit.exec</destFile>
-                    <dataFile>${basedir}/target/coverage-reports/jacoco-unit.exec</dataFile>
+                    <destFile>${project.basedir}/target/coverage-reports/jacoco-unit.exec</destFile>
+                    <dataFile>${project.basedir}/target/coverage-reports/jacoco-unit.exec</dataFile>
                     <output>file</output>
                     <append>true</append>
                     <excludes>
