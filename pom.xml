@@ -62,7 +62,7 @@
         <sonar.dynamicAnalysis>reuseReports</sonar.dynamicAnalysis>
         <sonar.language>java</sonar.language>
         <sonar.junit.reportPaths>${basedir}/target/surefire-reports/</sonar.junit.reportPaths>
-        <sonar.coverage.jacoco.xmlReportPaths>${project.basedir}/target/site/jacoco-aggregate/jacoco.xml</sonar.coverage.jacoco.xmlReportPaths>
+        <sonar.coverage.jacoco.xmlReportPaths>${project.basedir}/../target/site/jacoco-aggregate/jacoco.xml</sonar.coverage.jacoco.xmlReportPaths>
     </properties>
 
 
@@ -304,6 +304,10 @@
             <plugin>
                 <groupId>org.jacoco</groupId>
                 <artifactId>jacoco-maven-plugin</artifactId>
+                <configuration>
+                    <destFile>${sonar.coverage.jacoco.xmlReportPaths}</destFile>
+                    <append>true</append>
+                </configuration>
                 <executions>
                     <execution>
                         <id>report</id>
