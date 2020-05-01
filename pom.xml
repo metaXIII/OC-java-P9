@@ -62,7 +62,8 @@
         <sonar.dynamicAnalysis>reuseReports</sonar.dynamicAnalysis>
         <sonar.language>java</sonar.language>
         <sonar.junit.reportPaths>${basedir}/target/surefire-reports/</sonar.junit.reportPaths>
-        <sonar.coverage.jacoco.xmlReportPaths>${basedir}/target/coverage-reports/jacoco-unit.exec</sonar.coverage.jacoco.xmlReportPaths>
+<!--        <sonar.coverage.jacoco.xmlReportPaths>${project.basedir}/../target/jacoco.exec</sonar.coverage.jacoco.xmlReportPaths>-->
+        <sonar.jacoco.reportPath>${project.basedir}/../target/jacoco.exec</sonar.jacoco.reportPath>
     </properties>
 
 
@@ -309,30 +310,24 @@
             <plugin>
                 <groupId>org.jacoco</groupId>
                 <artifactId>jacoco-maven-plugin</artifactId>
-                <configuration>
-                    <destFile>${basedir}/target/coverage-reports/jacoco-unit.exec</destFile>
-                    <dataFile>${basedir}/target/coverage-reports/jacoco-unit.exec</dataFile>
-                    <output>file</output>
-                    <append>true</append>
-                    <excludes>
-                        <exclude>*MethodAccess</exclude>
-                    </excludes>
-                </configuration>
                 <executions>
                     <execution>
-                        <id>jacoco-initialize</id>
+                        <id>merge</id>
                         <goals>
-                            <goal>prepare-agent</goal>
+                            <goal>merge</goal>
                         </goals>
-                        <phase>test-compile</phase>
+                        <configuration>
+                            <fileSets>
+                                <fileSet implementation="org.apache.maven.shared.model.fileset.FileSet">
+                                    <directory>${project.basedir}</directory>
+                                    <includes>
+                                        <include>**/*.exec</include>
+                                    </includes>
+                                </fileSet>
+                            </fileSets>
+                        </configuration>
                     </execution>
-                    <execution>
-                        <id>jacoco-site</id>
-                        <phase>verify</phase>
-                        <goals>
-                            <goal>report</goal>
-                        </goals>
-                    </execution>
+
                 </executions>
             </plugin>
         </plugins>
